@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lupa — 기억의 조각으로 파일을 찾다 | macOS 파일·한글(HWP) 내용 검색</title>
+<meta name="description" content="파일 이름이 기억나지 않아도 괜찮습니다. 문서 속 단어 하나로 한글(HWP) 내용까지 0.03초에 찾는 macOS 검색 앱. 모든 처리는 내 Mac 안에서만.">
+<meta property="og:title" content="Lupa — 기억의 조각으로 파일을 찾다">
+<meta property="og:description" content="문서 속 단어 하나로, 한글(HWP) 내용까지 0.03초. macOS 전용 로컬 파일 검색.">
+<meta property="og:image" content="assets/shot-search.png">
+<link rel="icon" href="assets/icon.png">
+<style>
+  :root{
+    --bg:#0b0b14; --panel:#14141f; --panel2:#1a1a26; --border:#2c2c3e;
+    --fg:#f5f5f7; --muted:#8a8a99; --accent:#8b80f9; --accent2:#7aa2f7;
+    --ok:#34d399; --err:#f87171;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  section{padding:72px 0}
+  h2{font-size:clamp(24px,4vw,34px);font-weight:700;margin-bottom:14px;letter-spacing:-.02em}
+  .sub{color:var(--muted);font-size:17px;max-width:640px}
+
+  /* Hero */
+  .hero{padding:96px 0 72px;text-align:center}
+  .hero img.icon{width:96px;height:96px;border-radius:22px;box-shadow:0 12px 40px rgba(139,128,249,.35)}
+  .hero h1{font-size:clamp(30px,6vw,52px);font-weight:800;letter-spacing:-.03em;margin:26px 0 6px}
+  .hero .q{color:var(--muted);font-weight:300;font-size:clamp(18px,3vw,24px)}
+  .hero p.tag{margin:16px auto 30px;color:var(--muted);font-size:18px;max-width:560px}
+  .hero p.tag b{color:var(--fg);font-weight:600}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-block;padding:13px 26px;border-radius:999px;font-weight:600;font-size:16px}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.ghost{border:1px solid var(--border);color:var(--fg)}
+  .badge{display:inline-flex;gap:8px;align-items:center;margin-top:26px;
+    background:var(--panel2);border:1px solid var(--border);border-radius:999px;
+    padding:8px 18px;color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+  .badge b{color:var(--accent);font-weight:700}
+
+  /* 검색 pill */
+  .pill{display:inline-flex;gap:10px;align-items:center;background:var(--panel2);
+    border:1px solid var(--border);border-radius:999px;padding:12px 22px;
+    font-size:17px;font-weight:500;white-space:nowrap}
+  .pill .mag{color:var(--accent);font-weight:700}
+  .c-a{color:var(--accent)} .c-b{color:var(--accent2)} .c-e{color:var(--err)}
+
+  /* 레시피 */
+  .recipes{display:grid;gap:14px;margin-top:34px}
+  .recipe{background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    padding:22px 24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  .recipe .want{color:var(--muted);font-size:15px;flex:1 1 240px}
+  .recipe .want b{color:var(--fg);display:block;font-size:17px;margin-bottom:2px;font-weight:600}
+
+  /* 스크린샷 */
+  .shot{margin-top:38px;border-radius:14px;overflow:hidden;border:1px solid var(--border);
+    box-shadow:0 24px 80px rgba(0,0,0,.5)}
+  .shot img{width:100%;display:block}
+
+  /* HWP */
+  .hwp{background:linear-gradient(180deg,var(--panel) 0%,var(--bg) 100%);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .checks{margin-top:22px;display:grid;gap:10px}
+  .checks div{color:var(--muted);font-size:16px}
+  .checks span{color:var(--ok);font-weight:700;margin-right:10px}
+
+  /* 치트시트 */
+  table{width:100%;border-collapse:collapse;margin-top:28px;font-size:15px}
+  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+  td code{background:var(--panel2);border:1px solid var(--border);border-radius:6px;
+    padding:2px 8px;font-size:14px;color:var(--accent2);white-space:nowrap}
+  td.desc{color:var(--muted)}
+  .tablewrap{overflow-x:auto}
+
+  /* 프라이버시 */
+  .privacy .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:30px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:24px}
+  .card h3{font-size:17px;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:15px}
+
+  footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);font-size:14px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+  .center{text-align:center}
+  .lang{position:fixed;top:18px;right:22px;z-index:9;background:var(--panel2);
+    border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13px}
+</style>
+</head>
+<body>
+
+<a class="lang" href="en/">English</a>
+
+<header class="hero wrap">
+  <img class="icon" src="assets/icon.png" alt="Lupa 앱 아이콘">
+  <h1><span class="q">그 파일… 이름이 뭐였더라?</span><br>기억의 조각으로 찾습니다</h1>
+  <p class="tag">파일명, 문서 속 단어, 폴더, 날짜 — 생각나는 조각을 아무거나 던지세요.
+  <b>한글(HWP) 문서 내용까지</b>, 전부 이 Mac 안에서만.</p>
+  <div class="btns">
+    <a class="btn primary" href="https://apps.apple.com/kr/app/id6789231809" id="store">App Store에서 받기 — 무료</a>
+    <a class="btn ghost" href="#recipes">어떻게 찾는지 보기</a>
+  </div>
+  <div class="badge">244개 결과 <b>⚡ 33 ms</b> — 실측 응답 속도를 검색창에 항상 표시</div>
+</header>
+
+<section id="recipes" class="wrap">
+  <h2>30초 레시피 — 이렇게 찾습니다</h2>
+  <p class="sub">우리가 실제로 기억하는 건 파일명이 아니라 조각들입니다. Lupa는 그 조각을 그대로 검색어로 받습니다.</p>
+  <div class="recipes">
+    <div class="recipe">
+      <div class="want"><b>"위약금 조항이 있던 그 계약서"</b>파일명은 기억 안 남 — 내용 속 단어만 기억</div>
+      <div class="pill"><span class="mag">⌕</span><span class="c-a">c:</span>위약금 <span class="c-b">.hwp</span></div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>"재단 폴더 안의, '지원사업' 들어간 한글 파일"</b>폴더·확장자로 좁히기</div>
+      <div class="pill"><span class="mag">⌕</span><span class="c-b">f:재단</span> 지원사업 <span class="c-b">.hwp</span></div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>"단어 세 개는 기억나"</b>모든 조각이 일치한 파일이 맨 위로</div>
+      <div class="pill"><span class="mag">⌕</span>27001 대전 적용성</div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>"초안 말고 최종본만"</b>이름·내용 어느 쪽이든 걸리면 제외</div>
+      <div class="pill"><span class="mag">⌕</span>보고서 <span class="c-e">-초안</span></div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>"이번 달에 만진 10MB 넘는 발표자료"</b>키워드 없이 조건만으로도</div>
+      <div class="pill"><span class="mag">⌕</span><span class="c-b">종류:문서</span> 크기:&gt;10mb <span class="c-b">날짜:이번달</span></div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>윈도우에서 하던 그대로</b>와일드카드 지원</div>
+      <div class="pill"><span class="mag">⌕</span>*.mp3&nbsp;&nbsp;계약*</div>
+    </div>
+  </div>
+  <figure class="shot"><img src="assets/shot-search.png" alt="Lupa 검색 화면 — 결과 리스트와 미리보기" loading="lazy"></figure>
+</section>
+
+<section class="hwp">
+  <div class="wrap">
+    <h2>맥이 못 여는 한글 문서, Lupa가 엽니다</h2>
+    <p class="sub">macOS의 Spotlight·QuickLook은 HWP를 열지 못합니다. Lupa는 자체 렌더러를 내장해
+    <b style="color:var(--fg)">한컴오피스 없이</b> 본문을 검색하고, 표·서식이 살아있는 페이지로 미리 봅니다.</p>
+    <div class="checks">
+      <div><span>✓</span>HWP·HWPX 본문을 통째로 인덱싱 — "위약금" 한 단어로 계약서 찾기</div>
+      <div><span>✓</span>한글에서 연 것 같은 실제 레이아웃 미리보기 (한컴 설치 불필요)</div>
+      <div><span>✓</span>스캔 PDF 한국어 OCR — 이미지 속 글자까지 검색</div>
+      <div><span>✓</span>조사 자동 처리 · 단어 중간 조각 검색 ("보호정책"으로 "정보보호정책" 문서 찾기)</div>
+    </div>
+    <figure class="shot"><img src="assets/shot-multi.png" alt="멀티 키워드 그룹핑 검색 화면" loading="lazy"></figure>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>검색 문법 치트시트</h2>
+  <p class="sub">전부 조합할 수 있습니다. 조건이 많을수록 결과는 정확해집니다. 한글 접두사도 동일하게 동작합니다.</p>
+  <div class="tablewrap">
+  <table>
+    <tr><th>문법</th><th>기능</th></tr>
+    <tr><td><code>단어1 단어2</code></td><td class="desc">조각 여러 개 — 많이 일치할수록 상위 그룹</td></tr>
+    <tr><td><code>n:단어</code> <code>파일:단어</code></td><td class="desc">파일명에서만</td></tr>
+    <tr><td><code>c:단어</code> <code>내용:단어</code></td><td class="desc">문서 내용에서만</td></tr>
+    <tr><td><code>-단어</code></td><td class="desc">제외 (이름·내용 모두)</td></tr>
+    <tr><td><code>"정확한 문구"</code></td><td class="desc">조사 처리 없이 그대로 일치</td></tr>
+    <tr><td><code>f:폴더</code> <code>폴더:이름</code></td><td class="desc">경로 범위 (여러 개면 AND)</td></tr>
+    <tr><td><code>.hwp</code> <code>*.mp3</code> <code>계약*</code></td><td class="desc">확장자 · 와일드카드</td></tr>
+    <tr><td><code>종류:문서</code> <code>크기:&gt;10mb</code> <code>날짜:이번주</code></td><td class="desc">종류 · 크기 · 수정일</td></tr>
+  </table>
+  </div>
+</section>
+
+<section class="privacy wrap">
+  <h2>프라이버시가 기본값</h2>
+  <p class="sub">Lupa는 네트워크에 접근하는 코드 자체가 없습니다.</p>
+  <div class="cards">
+    <div class="card"><h3>100% 온디바이스</h3><p>인덱싱·검색·OCR·HWP 렌더링 전부 이 Mac 안에서만 처리됩니다.</p></div>
+    <div class="card"><h3>데이터 수집 없음</h3><p>어떤 정보도 밖으로 전송하지 않습니다. App Store 개인정보 라벨: "데이터가 수집되지 않음".</p></div>
+    <div class="card"><h3>선택한 폴더만</h3><p>macOS 샌드박스 안에서, 사용자가 직접 등록한 폴더에만 접근합니다.</p></div>
+  </div>
+</section>
+
+<section class="center wrap" style="padding-bottom:96px">
+  <h2>잊기 전에, 찾으세요.</h2>
+  <p class="sub" style="margin:0 auto 28px">Find it before you forget it.</p>
+  <a class="btn primary" href="https://apps.apple.com/kr/app/id6789231809">App Store에서 받기 — 무료</a>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Paeyoung Park · Lupa</div>
+    <div>
+      <a href="https://github.com/paeyoungpark-web/lupa-legal/blob/main/PRIVACY.md">개인정보처리방침</a> ·
+      <a href="https://github.com/paeyoungpark-web/lupa-legal">지원</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lupa — Find files from fragments of memory | macOS file &amp; content search</title>
+<meta name="description" content="Can't remember the file name? One word from inside the document is enough. Lupa searches names and full content — even Korean HWP files — in 0.03s, entirely on your Mac.">
+<meta property="og:title" content="Lupa — Find files from fragments of memory">
+<meta property="og:description" content="One word from inside a document is enough. Local file & content search for macOS.">
+<meta property="og:image" content="../assets/shot-search.png">
+<link rel="icon" href="../assets/icon.png">
+<style>
+  :root{
+    --bg:#0b0b14; --panel:#14141f; --panel2:#1a1a26; --border:#2c2c3e;
+    --fg:#f5f5f7; --muted:#8a8a99; --accent:#8b80f9; --accent2:#7aa2f7;
+    --ok:#34d399; --err:#f87171;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Apple SD Gothic Neo",sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  section{padding:72px 0}
+  h2{font-size:clamp(24px,4vw,34px);font-weight:700;margin-bottom:14px;letter-spacing:-.02em}
+  .sub{color:var(--muted);font-size:17px;max-width:640px}
+  .lang{position:fixed;top:18px;right:22px;z-index:9;background:var(--panel2);
+    border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13px}
+  .hero{padding:96px 0 72px;text-align:center}
+  .hero img.icon{width:96px;height:96px;border-radius:22px;box-shadow:0 12px 40px rgba(139,128,249,.35)}
+  .hero h1{font-size:clamp(30px,6vw,52px);font-weight:800;letter-spacing:-.03em;margin:26px 0 6px}
+  .hero .q{color:var(--muted);font-weight:300;font-size:clamp(18px,3vw,24px)}
+  .hero p.tag{margin:16px auto 30px;color:var(--muted);font-size:18px;max-width:560px}
+  .hero p.tag b{color:var(--fg);font-weight:600}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-block;padding:13px 26px;border-radius:999px;font-weight:600;font-size:16px}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.ghost{border:1px solid var(--border);color:var(--fg)}
+  .badge{display:inline-flex;gap:8px;align-items:center;margin-top:26px;
+    background:var(--panel2);border:1px solid var(--border);border-radius:999px;
+    padding:8px 18px;color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+  .badge b{color:var(--accent);font-weight:700}
+  .pill{display:inline-flex;gap:10px;align-items:center;background:var(--panel2);
+    border:1px solid var(--border);border-radius:999px;padding:12px 22px;
+    font-size:17px;font-weight:500;white-space:nowrap}
+  .pill .mag{color:var(--accent);font-weight:700}
+  .c-a{color:var(--accent)} .c-b{color:var(--accent2)} .c-e{color:var(--err)}
+  .recipes{display:grid;gap:14px;margin-top:34px}
+  .recipe{background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    padding:22px 24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  .recipe .want{color:var(--muted);font-size:15px;flex:1 1 240px}
+  .recipe .want b{color:var(--fg);display:block;font-size:17px;margin-bottom:2px;font-weight:600}
+  .shot{margin-top:38px;border-radius:14px;overflow:hidden;border:1px solid var(--border);
+    box-shadow:0 24px 80px rgba(0,0,0,.5)}
+  .shot img{width:100%;display:block}
+  .hwp{background:linear-gradient(180deg,var(--panel) 0%,var(--bg) 100%);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .checks{margin-top:22px;display:grid;gap:10px}
+  .checks div{color:var(--muted);font-size:16px}
+  .checks span{color:var(--ok);font-weight:700;margin-right:10px}
+  table{width:100%;border-collapse:collapse;margin-top:28px;font-size:15px}
+  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+  td code{background:var(--panel2);border:1px solid var(--border);border-radius:6px;
+    padding:2px 8px;font-size:14px;color:var(--accent2);white-space:nowrap}
+  td.desc{color:var(--muted)}
+  .tablewrap{overflow-x:auto}
+  .privacy .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:30px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:24px}
+  .card h3{font-size:17px;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:15px}
+  footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);font-size:14px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+  .center{text-align:center}
+</style>
+</head>
+<body>
+
+<a class="lang" href="../">한국어</a>
+
+<header class="hero wrap">
+  <img class="icon" src="../assets/icon.png" alt="Lupa app icon">
+  <h1><span class="q">What was that file called again?</span><br>Find it from fragments of memory</h1>
+  <p class="tag">A word from inside the document, a folder, a date — throw in whatever you remember.
+  Lupa searches file names <b>and full content</b>, entirely on your Mac.</p>
+  <div class="btns">
+    <a class="btn primary" href="https://apps.apple.com/app/id6789231809">Download on the App Store — Free</a>
+    <a class="btn ghost" href="#recipes">See how it works</a>
+  </div>
+  <div class="badge">244 results <b>⚡ 33 ms</b> — real response time, always shown in the search bar</div>
+</header>
+
+<section id="recipes" class="wrap">
+  <h2>Search the way you remember</h2>
+  <p class="sub">We rarely remember file names. We remember fragments — a word inside the document,
+  roughly where it lives, when we touched it. Lupa takes those fragments as-is.</p>
+  <div class="recipes">
+    <div class="recipe">
+      <div class="want"><b>"That contract with the penalty clause"</b>You only remember a word inside it</div>
+      <div class="pill"><span class="mag">⌕</span><span class="c-a">c:</span>penalty <span class="c-b">.pdf</span></div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>"A report somewhere in the projects folder"</b>Narrow by folder and extension</div>
+      <div class="pill"><span class="mag">⌕</span><span class="c-b">f:projects</span> report <span class="c-b">.docx</span></div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>"I remember three words"</b>Files matching all fragments rise to the top</div>
+      <div class="pill"><span class="mag">⌕</span>27001 audit applicability</div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>"Final versions only, no drafts"</b>Exclude by name or content</div>
+      <div class="pill"><span class="mag">⌕</span>report <span class="c-e">-draft</span></div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>"Big slide decks I touched this month"</b>No keywords needed — conditions alone work</div>
+      <div class="pill"><span class="mag">⌕</span><span class="c-b">kind:doc</span> size:&gt;10mb <span class="c-b">date:month</span></div>
+    </div>
+    <div class="recipe">
+      <div class="want"><b>Just like Windows search</b>Wildcards supported</div>
+      <div class="pill"><span class="mag">⌕</span>*.mp3&nbsp;&nbsp;contract*</div>
+    </div>
+  </div>
+  <figure class="shot"><img src="../assets/shot-search.png" alt="Lupa search window with results and preview" loading="lazy"></figure>
+</section>
+
+<section class="hwp">
+  <div class="wrap">
+    <h2>Opens what macOS can't — Korean HWP documents</h2>
+    <p class="sub">Spotlight and QuickLook can't read HWP files. Lupa ships its own renderer:
+    search the full text and preview pages — tables and formatting intact — <b style="color:var(--fg)">without Hancom Office installed</b>.</p>
+    <div class="checks">
+      <div><span>✓</span>Full-text indexing of HWP·HWPX — find a contract by a single word inside it</div>
+      <div><span>✓</span>Layout-faithful preview, like opening the real document</div>
+      <div><span>✓</span>Korean OCR for scanned PDFs — search text inside images</div>
+      <div><span>✓</span>Korean-aware matching: particles handled, mid-word fragments found</div>
+    </div>
+    <figure class="shot"><img src="../assets/shot-multi.png" alt="Multi-keyword grouped search" loading="lazy"></figure>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Search syntax cheatsheet</h2>
+  <p class="sub">Everything combines. The more fragments, the sharper the result.</p>
+  <div class="tablewrap">
+  <table>
+    <tr><th>Syntax</th><th>What it does</th></tr>
+    <tr><td><code>word1 word2</code></td><td class="desc">Multiple fragments — best matches grouped on top</td></tr>
+    <tr><td><code>n:word</code> <code>name:word</code></td><td class="desc">File names only</td></tr>
+    <tr><td><code>c:word</code> <code>content:word</code></td><td class="desc">Document content only</td></tr>
+    <tr><td><code>-word</code></td><td class="desc">Exclude (name or content)</td></tr>
+    <tr><td><code>"exact phrase"</code></td><td class="desc">Match exactly as typed</td></tr>
+    <tr><td><code>f:folder</code></td><td class="desc">Path scope (multiple = AND)</td></tr>
+    <tr><td><code>.hwp</code> <code>*.mp3</code> <code>contract*</code></td><td class="desc">Extensions &amp; wildcards</td></tr>
+    <tr><td><code>kind:doc</code> <code>size:&gt;10mb</code> <code>date:week</code></td><td class="desc">Kind · size · modified date</td></tr>
+  </table>
+  </div>
+</section>
+
+<section class="privacy wrap">
+  <h2>Private by default</h2>
+  <p class="sub">Lupa contains no networking code at all.</p>
+  <div class="cards">
+    <div class="card"><h3>100% on-device</h3><p>Indexing, search, OCR and HWP rendering all happen on your Mac.</p></div>
+    <div class="card"><h3>Zero data collection</h3><p>Nothing ever leaves your machine. App Store privacy label: "Data Not Collected".</p></div>
+    <div class="card"><h3>Only folders you choose</h3><p>Sandboxed — Lupa touches only the folders you explicitly add.</p></div>
+  </div>
+</section>
+
+<section class="center wrap" style="padding-bottom:96px">
+  <h2>Find it before you forget it.</h2>
+  <p class="sub" style="margin:0 auto 28px">Local search for macOS, built for real memory.</p>
+  <a class="btn primary" href="https://apps.apple.com/app/id6789231809">Download on the App Store — Free</a>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Paeyoung Park · Lupa</div>
+    <div>
+      <a href="https://github.com/paeyoungpark-web/lupa-legal/blob/main/PRIVACY.md">Privacy Policy</a> ·
+      <a href="https://github.com/paeyoungpark-web/lupa-legal">Support</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
