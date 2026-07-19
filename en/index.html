@@ -73,6 +73,21 @@
   footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);font-size:14px}
   footer .wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
   .center{text-align:center}
+  .start{background:linear-gradient(180deg,var(--panel) 0%,var(--bg) 100%);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .steps{display:grid;gap:16px;margin-top:32px;counter-reset:s}
+  .step{background:var(--panel2);border:1px solid var(--border);border-radius:16px;
+    padding:22px 24px 22px 70px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:22px;top:22px;
+    width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;
+    font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .step h3{font-size:18px;margin-bottom:4px}
+  .step p{color:var(--muted);font-size:15px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{background:var(--bg);border:1px solid var(--border);border-radius:999px;
+    padding:6px 14px;font-size:14px;color:var(--fg);display:inline-flex;gap:6px;align-items:center}
+  .note{margin-top:12px;font-size:13.5px;color:var(--muted);
+    border-left:2px solid var(--accent);padding-left:12px}
 </style>
 </head>
 <body>
@@ -90,6 +105,35 @@
   </div>
   <div class="badge">244 results <b>⚡ 33 ms</b> — real response time, always shown in the search bar</div>
 </header>
+
+<section class="start">
+  <div class="wrap">
+    <h2>Getting started — three steps</h2>
+    <p class="sub">Lupa reads <b style="color:var(--fg)">only the folders you choose</b> (macOS sandbox). Just add the places you want to search.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Install from the App Store and launch</h3>
+        <p>On first launch you'll pick folders. Hit <b style="color:var(--fg)">"Search entire Home folder"</b> to add Documents, Downloads and Desktop at once.</p>
+      </div>
+      <div class="step">
+        <h3>Add iCloud &amp; external disks via "Quick add"</h3>
+        <p>The Home scan doesn't include iCloud Drive or external disks. Add them with one click in <b style="color:var(--fg)">Settings (⌘,) → Folders → Quick add</b>.</p>
+        <div class="chips">
+          <span class="chip">☁️ iCloud Drive</span>
+          <span class="chip">⬇︎ Downloads</span>
+          <span class="chip">🖥 Desktop</span>
+          <span class="chip">📄 Documents</span>
+          <span class="chip">💾 External disks</span>
+        </div>
+        <p class="note">For security, macOS asks you to "Allow" each location once. The quick-add button opens the picker already pointed there, so it's a single click.</p>
+      </div>
+      <div class="step">
+        <h3>Indexing done — start searching</h3>
+        <p>Files are read in the background. Press ⌥Space and type the <b style="color:var(--fg)">fragments</b> you remember — like the recipes below.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="recipes" class="wrap">
   <h2>Search the way you remember</h2>

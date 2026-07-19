@@ -88,6 +88,23 @@
   .center{text-align:center}
   .lang{position:fixed;top:18px;right:22px;z-index:9;background:var(--panel2);
     border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13px}
+  /* 시작하기 */
+  .start{background:linear-gradient(180deg,var(--panel) 0%,var(--bg) 100%);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .steps{display:grid;gap:16px;margin-top:32px;counter-reset:s}
+  .step{background:var(--panel2);border:1px solid var(--border);border-radius:16px;
+    padding:22px 24px 22px 70px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:22px;top:22px;
+    width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;
+    font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .step h3{font-size:18px;margin-bottom:4px}
+  .step p{color:var(--muted);font-size:15px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{background:var(--bg);border:1px solid var(--border);border-radius:999px;
+    padding:6px 14px;font-size:14px;color:var(--fg);display:inline-flex;gap:6px;align-items:center}
+  .chip b{color:var(--accent2);font-weight:600}
+  .note{margin-top:12px;font-size:13.5px;color:var(--muted);
+    border-left:2px solid var(--accent);padding-left:12px}
 </style>
 </head>
 <body>
@@ -105,6 +122,35 @@
   </div>
   <div class="badge">244개 결과 <b>⚡ 33 ms</b> — 실측 응답 속도를 검색창에 항상 표시</div>
 </header>
+
+<section class="start">
+  <div class="wrap">
+    <h2>시작하기 — 3단계면 끝</h2>
+    <p class="sub">Lupa는 <b style="color:var(--fg)">사용자가 선택한 폴더만</b> 읽습니다 (macOS 샌드박스). 검색할 위치만 등록하면 됩니다.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>App Store에서 설치하고 실행</h3>
+        <p>처음 실행하면 폴더 선택 화면이 뜹니다. <b style="color:var(--fg)">‘홈 폴더 전체 검색’</b>을 누르면 문서·다운로드·바탕화면이 한 번에 등록됩니다.</p>
+      </div>
+      <div class="step">
+        <h3>iCloud·외장 디스크는 ‘빠른 추가’로</h3>
+        <p>홈 폴더 검색은 iCloud Drive와 외장 디스크를 포함하지 않습니다. <b style="color:var(--fg)">설정(⌘,) → 폴더 → 빠른 추가</b>에서 버튼 한 번으로 등록하세요.</p>
+        <div class="chips">
+          <span class="chip">☁️ iCloud Drive</span>
+          <span class="chip">⬇︎ 다운로드</span>
+          <span class="chip">🖥 바탕화면</span>
+          <span class="chip">📄 문서</span>
+          <span class="chip">💾 외장 디스크</span>
+        </div>
+        <p class="note">보안상 각 위치를 처음 추가할 때 시스템이 “허용”을 한 번 물어봅니다. 빠른 추가 버튼이 그 위치로 바로 이동된 창을 열어줘서 클릭 한 번이면 됩니다.</p>
+      </div>
+      <div class="step">
+        <h3>인덱싱이 끝나면 바로 검색</h3>
+        <p>백그라운드에서 파일을 미리 읽어둡니다. ⌥Space를 누르고 기억나는 <b style="color:var(--fg)">조각</b>을 입력하세요 — 아래 레시피처럼.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="recipes" class="wrap">
   <h2>30초 레시피 — 이렇게 찾습니다</h2>
