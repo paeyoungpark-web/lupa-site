@@ -302,6 +302,65 @@
   </div>
 </header>
 
+<style>
+  .agent{background:var(--sunk);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .agent .badge{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ground);background:var(--index);border-radius:3px;padding:3px 8px 4px;margin-bottom:14px}
+  .term{margin:26px 0 20px;background:var(--surface);border:1px solid var(--hair2);border-radius:10px;
+    box-shadow:var(--shadow);overflow:hidden;max-width:720px}
+  .term .tbar{display:flex;gap:7px;padding:12px 15px;border-bottom:1px solid var(--hair)}
+  .term .tbar span{width:11px;height:11px;border-radius:50%;background:var(--t4)}
+  .term .tbody{padding:16px 18px;font-family:var(--mono);font-size:14px;line-height:1.85}
+  .term .tline{color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .term .tag{display:inline-block;min-width:34px;font-size:10px;letter-spacing:.08em;font-weight:600;
+    color:var(--t3);margin-right:8px}
+  .term .tag.ai{color:var(--index)}
+  .term code{font-family:var(--mono);color:var(--t1);background:var(--wash);padding:2px 6px;border-radius:3px}
+  .term .tout{color:var(--t2);margin-top:8px;padding-top:10px;border-top:1px dashed var(--hair)}
+  .term .tout b{color:var(--t1)}
+  .vs{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:6px 0 24px}
+  .vs .vscol .lbl{margin-bottom:2px}
+  .vs .vscol .v{font-family:var(--mono);font-size:30px;font-weight:640;letter-spacing:-.02em}
+  .vs .vscol .v span{font-size:14px;color:var(--t3);font-weight:400;margin-left:2px}
+  .vs .vscol.dim .v{color:var(--t3)}
+  .vs .vsx{font-family:var(--mono);font-size:12px;color:var(--t3)}
+  .vs .vsnote{color:var(--t2);font-size:14px}
+  .vs .vsnote b{color:var(--t1)}
+</style>
+<section class="agent">
+  <div class="wrap" style="padding-top:76px;padding-bottom:76px">
+    <span class="badge">New · AI Agent</span>
+    <div class="shead"><span class="tick">★</span><span class="lbl">AI Agent Search</span></div>
+    <h2>Now your AI finds the files for you</h2>
+    <p class="sub">Lupa ships a <b>command-line interface</b>. AI agents like Claude and Hermes turn your
+      <b>plain-language</b> request into a Lupa query and sweep hundreds of thousands of files in
+      <b>tens of milliseconds</b> — all on your Mac.</p>
+
+    <div class="term">
+      <div class="tbar"><span></span><span></span><span></span></div>
+      <div class="tbody">
+        <div class="tline"><span class="tag">You</span>“Find the audit reports that mention management review”</div>
+        <div class="tline"><span class="tag ai">AI</span><code>lupa-search "f:audit c:management review"</code></div>
+        <div class="tout">→ <b>598</b> matches · <b class="num">19ms</b> · with highlighted snippets (JSON)</div>
+      </div>
+    </div>
+
+    <div class="vs">
+      <div class="vscol"><div class="lbl">Lupa · FTS5 index</div><b class="v num">19<span>ms</span></b></div>
+      <div class="vsx">vs</div>
+      <div class="vscol dim"><div class="lbl">find · live scan</div><b class="v num">2,348<span>ms</span></b></div>
+      <div class="vsnote">~<b class="num">124×</b> faster — and it searches <b>content</b>, not just names</div>
+    </div>
+
+    <div class="checks">
+      <div><span>✓</span><em style="font-style:normal">Indexes names <i>and</i> content (SQLite FTS5) — HWP, PDF, DOCX bodies included</em></div>
+      <div><span>✓</span><em style="font-style:normal">Korean 2-gram tokenizer &amp; particle handling for accurate CJK search</em></div>
+      <div><span>✓</span><em style="font-style:normal">Same syntax as the app — <code>n:</code> <code>c:</code> <code>f:</code> <code>-exclude</code> <code>"exact phrase"</code>, type/size/date</em></div>
+      <div><span>✓</span><em style="font-style:normal">JSON output → agents format results instantly · zero network, fully local</em></div>
+    </div>
+  </div>
+</section>
+
 <section class="start">
   <div class="wrap">
     <div class="shead"><span class="tick">01</span><span class="lbl">Getting started</span></div>

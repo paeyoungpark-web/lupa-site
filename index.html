@@ -305,6 +305,65 @@
   </div>
 </header>
 
+<style>
+  .agent{background:var(--sunk);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .agent .badge{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ground);background:var(--index);border-radius:3px;padding:3px 8px 4px;margin-bottom:14px}
+  .term{margin:26px 0 20px;background:var(--surface);border:1px solid var(--hair2);border-radius:10px;
+    box-shadow:var(--shadow);overflow:hidden;max-width:720px}
+  .term .tbar{display:flex;gap:7px;padding:12px 15px;border-bottom:1px solid var(--hair)}
+  .term .tbar span{width:11px;height:11px;border-radius:50%;background:var(--t4)}
+  .term .tbody{padding:16px 18px;font-family:var(--mono);font-size:14px;line-height:1.85}
+  .term .tline{color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .term .tag{display:inline-block;min-width:26px;font-size:10px;letter-spacing:.08em;font-weight:600;
+    color:var(--t3);margin-right:8px}
+  .term .tag.ai{color:var(--index)}
+  .term code{font-family:var(--mono);color:var(--t1);background:var(--wash);padding:2px 6px;border-radius:3px}
+  .term .tout{color:var(--t2);margin-top:8px;padding-top:10px;border-top:1px dashed var(--hair)}
+  .term .tout b{color:var(--t1)}
+  .vs{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:6px 0 24px}
+  .vs .vscol .lbl{margin-bottom:2px}
+  .vs .vscol .v{font-family:var(--mono);font-size:30px;font-weight:640;letter-spacing:-.02em}
+  .vs .vscol .v span{font-size:14px;color:var(--t3);font-weight:400;margin-left:2px}
+  .vs .vscol.dim .v{color:var(--t3)}
+  .vs .vsx{font-family:var(--mono);font-size:12px;color:var(--t3)}
+  .vs .vsnote{color:var(--t2);font-size:14px}
+  .vs .vsnote b{color:var(--t1)}
+</style>
+<section class="agent">
+  <div class="wrap" style="padding-top:76px;padding-bottom:76px">
+    <span class="badge">New · AI Agent</span>
+    <div class="shead"><span class="tick">★</span><span class="lbl">AI 에이전트 검색</span></div>
+    <h2>이제 AI에게 물어보면, Lupa가 찾아냅니다</h2>
+    <p class="sub">Lupa는 <b>커맨드라인(CLI)</b>을 내장합니다. Claude·Hermes 같은 <b>AI 에이전트</b>가
+      여러분의 자연어를 Lupa 검색어로 바꿔, 수십만 개 파일을 <b>수십 밀리초</b>에 뒤집니다.
+      물론 전부 이 Mac 안에서만.</p>
+
+    <div class="term">
+      <div class="tbar"><span></span><span></span><span></span></div>
+      <div class="tbody">
+        <div class="tline"><span class="tag">나</span>"심사보고서에서 경영검토 관련 파일 찾아줘"</div>
+        <div class="tline"><span class="tag ai">AI</span><code>lupa-search "f:심사보고서 c:경영검토"</code></div>
+        <div class="tout">→ <b>598건</b> 매치 · <b class="num">19ms</b> · 하이라이트 스니펫 포함 (JSON)</div>
+      </div>
+    </div>
+
+    <div class="vs">
+      <div class="vscol"><div class="lbl">Lupa · FTS5 인덱스</div><b class="v num">19<span>ms</span></b></div>
+      <div class="vsx">vs</div>
+      <div class="vscol dim"><div class="lbl">find · 실시간 스캔</div><b class="v num">2,348<span>ms</span></b></div>
+      <div class="vsnote">약 <b class="num">124×</b> 빠르고, <b>파일명뿐 아니라 내용</b>까지 찾습니다</div>
+    </div>
+
+    <div class="checks">
+      <div><span>✓</span><em style="font-style:normal">파일명 + 내용 모두 인덱싱 (SQLite FTS5) — HWP·PDF·DOCX 본문까지</em></div>
+      <div><span>✓</span><em style="font-style:normal">한글 2-gram 토크나이저 · 조사 자동 처리로 정확한 한국어 검색</em></div>
+      <div><span>✓</span><em style="font-style:normal">앱과 동일한 문법 — <code>n:</code> <code>c:</code> <code>f:</code> <code>-제외</code> <code>"정확구문"</code> 종류·크기·날짜</em></div>
+      <div><span>✓</span><em style="font-style:normal">JSON 출력 → 에이전트가 결과를 바로 정리 · 네트워크 0, 완전 로컬</em></div>
+    </div>
+  </div>
+</section>
+
 <section class="start">
   <div class="wrap">
     <div class="shead"><span class="tick">01</span><span class="lbl">시작하기</span></div>
