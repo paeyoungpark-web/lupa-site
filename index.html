@@ -329,6 +329,18 @@
   .vs .vsx{font-family:var(--mono);font-size:12px;color:var(--t3)}
   .vs .vsnote{color:var(--t2);font-size:14px}
   .vs .vsnote b{color:var(--t1)}
+  table.cmp{width:100%;border-collapse:collapse;font-size:14.5px}
+  table.cmp th,table.cmp td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  table.cmp th{font-weight:600;color:var(--t2);font-size:12px;letter-spacing:.01em}
+  table.cmp td:first-child{color:var(--t2);white-space:nowrap}
+  table.cmp td.good{color:var(--t1)}
+  table.cmp td.bad{color:var(--t3)}
+  table.cmp .mut{color:var(--t3);font-size:12px}
+  .skillcard{background:var(--surface);border:1px solid var(--hair2);border-radius:10px;padding:18px 20px;margin-top:24px;max-width:720px}
+  .skillcard .sk-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:7px}
+  .skillcard .sk-h code{font-family:var(--mono);font-size:15px;color:var(--index);background:var(--wash);padding:3px 9px;border-radius:4px}
+  .skillcard .sk-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);border:1px solid var(--hair2);border-radius:3px;padding:2px 7px}
+  .skillcard p{color:var(--t2);font-size:14.5px;margin:0}
 </style>
 <section class="agent">
   <div class="wrap" style="padding-top:76px;padding-bottom:76px">
@@ -348,18 +360,22 @@
       </div>
     </div>
 
-    <div class="vs">
-      <div class="vscol"><div class="lbl">Lupa · FTS5 인덱스</div><b class="v num">19<span>ms</span></b></div>
-      <div class="vsx">vs</div>
-      <div class="vscol dim"><div class="lbl">find · 실시간 스캔</div><b class="v num">2,348<span>ms</span></b></div>
-      <div class="vsnote">약 <b class="num">124×</b> 빠르고, <b>파일명뿐 아니라 내용</b>까지 찾습니다</div>
+    <p class="sub" style="margin-bottom:16px">에이전트에게 그냥 <code>find</code>로 시키면 느리고 파일명만 훑습니다. Lupa CLI는 미리 인덱싱된 DB를 씁니다.</p>
+    <div class="tablewrap">
+    <table class="cmp">
+      <tr><th>항목</th><th>Lupa CLI</th><th>그냥 에이전트에 맡길 때 <span class="mut">(find 기반)</span></th></tr>
+      <tr><td>검색 속도</td><td class="good"><b class="num">19ms</b> <span class="mut">초고속</span></td><td class="bad"><span class="num">2,348ms</span> <span class="mut">약 124× 느림</span></td></tr>
+      <tr><td>방식</td><td class="good">SQLite FTS5 사전 인덱스</td><td class="bad">실시간 파일시스템 스캔</td></tr>
+      <tr><td>내용 검색</td><td class="good">✓ 본문까지 — HWP·PDF·DOCX</td><td class="bad">✗ 파일명만</td></tr>
+      <tr><td>한글 지원</td><td class="good">✓ 2-gram · 조사 자동 처리</td><td class="bad">△ 조사 처리 안 됨</td></tr>
+      <tr><td>정확도</td><td class="good">매우 높음 (FTS5 랭킹)</td><td class="bad">기본 grep</td></tr>
+      <tr><td>프라이버시</td><td class="good">완전 로컬 · 네트워크 0</td><td class="bad">로컬 (느림)</td></tr>
+    </table>
     </div>
 
-    <div class="checks">
-      <div><span>✓</span><em style="font-style:normal">파일명 + 내용 모두 인덱싱 (SQLite FTS5) — HWP·PDF·DOCX 본문까지</em></div>
-      <div><span>✓</span><em style="font-style:normal">한글 2-gram 토크나이저 · 조사 자동 처리로 정확한 한국어 검색</em></div>
-      <div><span>✓</span><em style="font-style:normal">앱과 동일한 문법 — <code>n:</code> <code>c:</code> <code>f:</code> <code>-제외</code> <code>"정확구문"</code> 종류·크기·날짜</em></div>
-      <div><span>✓</span><em style="font-style:normal">JSON 출력 → 에이전트가 결과를 바로 정리 · 네트워크 0, 완전 로컬</em></div>
+    <div class="skillcard">
+      <div class="sk-h"><code>lupa-file-search</code><span class="sk-tag">Claude · Hermes 스킬</span></div>
+      <p>이 스킬만 설치하면 <b style="color:var(--t1)">"심사보고서에서 경영검토 찾아줘"</b> 같은 자연어를 에이전트가 곧바로 Lupa 검색으로 실행하고, 결과를 표로 정리해 줍니다. Lupa가 없으면 App Store 설치 링크로 안내하고, 폴더가 인덱싱 안 됐으면 알려줍니다.</p>
     </div>
   </div>
 </section>

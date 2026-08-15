@@ -326,6 +326,18 @@
   .vs .vsx{font-family:var(--mono);font-size:12px;color:var(--t3)}
   .vs .vsnote{color:var(--t2);font-size:14px}
   .vs .vsnote b{color:var(--t1)}
+  table.cmp{width:100%;border-collapse:collapse;font-size:14.5px}
+  table.cmp th,table.cmp td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--hair);vertical-align:top}
+  table.cmp th{font-weight:600;color:var(--t2);font-size:12px;letter-spacing:.01em}
+  table.cmp td:first-child{color:var(--t2);white-space:nowrap}
+  table.cmp td.good{color:var(--t1)}
+  table.cmp td.bad{color:var(--t3)}
+  table.cmp .mut{color:var(--t3);font-size:12px}
+  .skillcard{background:var(--surface);border:1px solid var(--hair2);border-radius:10px;padding:18px 20px;margin-top:24px;max-width:720px}
+  .skillcard .sk-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:7px}
+  .skillcard .sk-h code{font-family:var(--mono);font-size:15px;color:var(--index);background:var(--wash);padding:3px 9px;border-radius:4px}
+  .skillcard .sk-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);border:1px solid var(--hair2);border-radius:3px;padding:2px 7px}
+  .skillcard p{color:var(--t2);font-size:14.5px;margin:0}
 </style>
 <section class="agent">
   <div class="wrap" style="padding-top:76px;padding-bottom:76px">
@@ -345,18 +357,22 @@
       </div>
     </div>
 
-    <div class="vs">
-      <div class="vscol"><div class="lbl">Lupa · FTS5 index</div><b class="v num">19<span>ms</span></b></div>
-      <div class="vsx">vs</div>
-      <div class="vscol dim"><div class="lbl">find · live scan</div><b class="v num">2,348<span>ms</span></b></div>
-      <div class="vsnote">~<b class="num">124×</b> faster — and it searches <b>content</b>, not just names</div>
+    <p class="sub" style="margin-bottom:16px">Tell an agent to just run <code>find</code> and it's slow and names-only. The Lupa CLI queries a pre-built index instead.</p>
+    <div class="tablewrap">
+    <table class="cmp">
+      <tr><th>Aspect</th><th>Lupa CLI</th><th>Naive agent search <span class="mut">(find-based)</span></th></tr>
+      <tr><td>Search speed</td><td class="good"><b class="num">19ms</b> <span class="mut">instant</span></td><td class="bad"><span class="num">2,348ms</span> <span class="mut">~124× slower</span></td></tr>
+      <tr><td>Method</td><td class="good">Pre-built SQLite FTS5 index</td><td class="bad">Live filesystem scan</td></tr>
+      <tr><td>Content search</td><td class="good">✓ Full text — HWP · PDF · DOCX</td><td class="bad">✗ Filenames only</td></tr>
+      <tr><td>Korean (CJK)</td><td class="good">✓ 2-gram · particle handling</td><td class="bad">△ No particle handling</td></tr>
+      <tr><td>Relevance</td><td class="good">High (FTS5 ranking)</td><td class="bad">Plain grep</td></tr>
+      <tr><td>Privacy</td><td class="good">Fully local · zero network</td><td class="bad">Local (but slow)</td></tr>
+    </table>
     </div>
 
-    <div class="checks">
-      <div><span>✓</span><em style="font-style:normal">Indexes names <i>and</i> content (SQLite FTS5) — HWP, PDF, DOCX bodies included</em></div>
-      <div><span>✓</span><em style="font-style:normal">Korean 2-gram tokenizer &amp; particle handling for accurate CJK search</em></div>
-      <div><span>✓</span><em style="font-style:normal">Same syntax as the app — <code>n:</code> <code>c:</code> <code>f:</code> <code>-exclude</code> <code>"exact phrase"</code>, type/size/date</em></div>
-      <div><span>✓</span><em style="font-style:normal">JSON output → agents format results instantly · zero network, fully local</em></div>
+    <div class="skillcard">
+      <div class="sk-h"><code>lupa-file-search</code><span class="sk-tag">Claude · Hermes skill</span></div>
+      <p>Install the skill and your agent turns <b style="color:var(--t1)">"find the audit reports about management review"</b> straight into a Lupa search, then formats the results. No Lupa installed? It points you to the App Store. Folder not indexed? It tells you.</p>
     </div>
   </div>
 </section>
