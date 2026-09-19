@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lupa × AI tools — search your Mac's files from Claude, Aside, Codex, Hermes</title>
+<meta name="description" content="Connect Lupa to Claude Code, Claude Desktop, Aside, Codex, Hermes and other AI agents so they can find your Mac's files by name and by what is written inside documents. One-line MCP setup, troubleshooting, agent rules.">
+<link rel="icon" href="../assets/icon.png">
+<style>
+  :root {
+    --bg: #0b0b14; --card: #14141f; --fg: #e8e8f0; --muted: #9a9ab0;
+    --accent: #8b80f9; --accent2: #7aa2f7; --line: #26263a; --warn: #f5a97f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--fg);
+         font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+         line-height: 1.7; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 48px 20px 80px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: .02em; }
+  .logo span { color: var(--accent); }
+  h1 { font-size: 1.9rem; margin: 28px 0 8px; }
+  .sub { color: var(--muted); margin-bottom: 32px; }
+  h2.sect { font-size: 1.25rem; margin: 40px 0 14px; }
+  h3 { font-size: 1.02rem; margin: 22px 0 8px; }
+  p { margin-bottom: 12px; }
+  .hero { background: linear-gradient(135deg, rgba(139,128,249,.14), rgba(122,162,247,.10));
+          border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; margin-bottom: 34px; }
+  .hero p { color: var(--muted); font-size: .95rem; margin: 10px 0 0; }
+  pre { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+        padding: 14px 16px; overflow-x: auto; margin: 10px 0 16px; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .92em; }
+  pre code { color: var(--accent2); }
+  p code, li code, td code { background: rgba(139,128,249,.12); border-radius: 4px;
+        padding: 1px 6px; color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: .94rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 9px 10px; text-align: left; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: .88rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+          padding: 16px 18px; margin-bottom: 12px; }
+  .note { border-left: 3px solid var(--warn); padding-left: 14px; color: var(--muted);
+          margin: 16px 0; font-size: .95rem; }
+  ul, ol { margin: 0 0 14px 20px; }
+  li { margin-bottom: 6px; }
+  .ok { color: #8bd5a0; } .no { color: #f08080; }
+  .links { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: .92rem; }
+  .links a { margin-right: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit">Lupa<span>.</span></a></div>
+
+  <h1>Search your Mac from any AI tool</h1>
+  <p class="sub">How to let Claude, Aside, Codex, Hermes — any AI tool — find files with Lupa.
+    Setup is a single line.</p>
+
+  <div class="hero">
+    <strong>The command is the same everywhere</strong>
+    <pre><code>npx -y github:paeyoungpark-web/lupa-mcp</code></pre>
+    <p>Put this in your AI tool's <b>MCP server</b> settings and it gains two tools:
+      <code>lupa_search</code> (search) and <code>lupa_read</code> (read a document's text).
+      Everything runs on this Mac — no network.</p>
+  </div>
+
+  <h2 class="sect">Setup (once)</h2>
+  <ol>
+    <li><a href="https://apps.apple.com/app/id6789231809">Install Lupa from the App Store</a></li>
+    <li>Open the app → <code>⌘,</code> → add the folders you want searched → wait for indexing</li>
+    <li>Check Node.js — run <code>node -v</code> (get it at <a href="https://nodejs.org">nodejs.org</a>)</li>
+  </ol>
+
+  <h2 class="sect">Per-tool setup</h2>
+
+  <div class="card">
+    <h3>Claude Code</h3>
+    <pre><code>claude mcp add lupa -- npx -y github:paeyoungpark-web/lupa-mcp</code></pre>
+    To also install the skill that turns plain language into Lupa queries:
+    <pre><code>claude plugin marketplace add paeyoungpark-web/lupa-claude-plugin
+claude plugin install lupa-file-search@lupa</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Claude Desktop</h3>
+    <p>Lupa Settings ▸ General ▸ <b>"Connect to Claude Desktop…"</b> — one click (Lupa 2.0.1+).</p>
+    <p>Or edit <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>:</p>
+    <pre><code>{
+  "mcpServers": {
+    "lupa": {
+      "command": "/bin/zsh",
+      "args": ["-lc", "npx -y github:paeyoungpark-web/lupa-mcp"]
+    }
+  }
+}</code></pre>
+    <p class="note">Desktop apps don't inherit your terminal's PATH. <code>"command": "npx"</code> alone
+      will not start — wrap it in a login shell as shown.</p>
+  </div>
+
+  <div class="card">
+    <h3>Aside (AI browser)</h3>
+    <p>Lupa Settings ▸ General ▸ <b>"Connect to Aside…"</b> (Lupa 2.0.1+). <b>Quit Aside (⌘Q) first.</b></p>
+    <p>Or in Aside: Settings ▸ <b>Plugins &amp; MCPs</b> ▸ add a server ▸ Command:
+      <code>npx -y github:paeyoungpark-web/lupa-mcp</code></p>
+  </div>
+
+  <div class="card">
+    <h3>Codex CLI</h3>
+    <pre><code>codex mcp add lupa -- npx -y github:paeyoungpark-web/lupa-mcp
+codex mcp list   # lupa should appear</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Hermes</h3>
+    <p>Add it under <code>mcp_servers:</code> in <code>~/.hermes/config.yaml</code>.</p>
+    <pre><code>mcp_servers:
+  lupa:
+    command: npx
+    args: ["-y", "github:paeyoungpark-web/lupa-mcp"]</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Any other MCP-capable tool</h3>
+    <p>Use whichever shape that tool's <code>stdio</code> MCP settings expect.</p>
+    <table>
+      <tr><th>Shape</th><th>Value</th></tr>
+      <tr><td>Single command line</td><td><code>npx -y github:paeyoungpark-web/lupa-mcp</code></td></tr>
+      <tr><td>command + args</td><td><code>npx</code> / <code>["-y", "github:paeyoungpark-web/lupa-mcp"]</code></td></tr>
+      <tr><td>GUI app without shell PATH</td><td><code>/bin/zsh</code> / <code>["-lc", "npx -y github:paeyoungpark-web/lupa-mcp"]</code></td></tr>
+    </table>
+  </div>
+
+  <h2 class="sect">Why MCP, not the command line</h2>
+  <p>Modern agents run shell commands <b>inside their own sandbox</b>. Lupa's command-line tool is
+    sandbox-signed (an App Store requirement), and macOS blocks a sandboxed binary launched from
+    inside another sandbox.</p>
+  <table>
+    <tr><th>Environment</th><th>Running the CLI directly</th></tr>
+    <tr><td>Terminal · Claude Code</td><td class="ok">works</td></tr>
+    <tr><td>Aside shell tool</td><td class="no">exit code 133</td></tr>
+    <tr><td>Codex sandbox</td><td class="no">exit code 134</td></tr>
+  </table>
+  <p><b>MCP servers start outside that sandbox</b>, so the same tool works once Lupa is registered as MCP.</p>
+
+  <h2 class="sect">Check the connection</h2>
+  <p>Success looks like <code>lupa_search</code> and <code>lupa_read</code> showing up in the tool list.
+    Try asking: "find my contracts with Lupa".</p>
+  <ul>
+    <li><code>lupa_search</code> — search file names and document contents, with an option to match folder names.</li>
+    <li><code>lupa_read</code> — returns a file's <b>text</b> from the index without opening the file,
+      so agents can summarise formats they cannot parse (Hangul HWP, scanned PDFs).</li>
+  </ul>
+
+  <h2 class="sect">Troubleshooting</h2>
+  <table>
+    <tr><th>Symptom</th><th>Fix</th></tr>
+    <tr><td>Exit code <b>133 / 134</b>, <code>Trace/BPT trap</code></td>
+        <td>The CLI was run inside a sandbox. Register Lupa as MCP instead — retrying or copying
+            the binary fails for the same reason.</td></tr>
+    <tr><td><code>npx: command not found</code></td>
+        <td>The GUI app can't see your PATH. Wrap it: <code>/bin/zsh -lc "npx …"</code></td></tr>
+    <tr><td><code>index_not_found</code></td>
+        <td>Add folders in the Lupa app and wait for indexing to finish.</td></tr>
+    <tr><td>First call takes 10–20s</td><td>npx is downloading the package. Later calls are instant.</td></tr>
+    <tr><td>"malware cannot be verified" warning</td>
+        <td>That file was built from source by an agent. Delete it and use MCP.
+            It has nothing to do with the App Store app.</td></tr>
+  </table>
+
+  <h2 class="sect">Rules to give your agent</h2>
+  <p>Paste this into a skill or system prompt to stop agents from improvising workarounds.</p>
+  <pre><code>Use Lupa instead of find/grep/mdfind for local file lookups.
+
+1. If lupa_search / lupa_read are available, use only those.
+2. If they are missing, tell the user to register the Lupa MCP server, then stop.
+3. Never do these — they all fail or ruin the results:
+   - running the lupa-search binary through a shell (killed with 133/134 in sandboxes)
+   - building the CLI from source (unsigned binary -> macOS security warning)
+   - querying Lupa's SQLite index directly (skips the tokenizer and ranking; results get far worse)
+4. Query syntax: n:name c:content f:folder -exclude "exact phrase" kind:pdf size:>10mb date:week .hwp report*
+5. Need the text? Use lupa_read.</code></pre>
+
+  <h2 class="sect">Obsidian and friends: add the folder</h2>
+  <p>Obsidian and note apps aren't agents — they make files. Add the vault folder in Lupa and your
+    Markdown is searchable by content. Cloud drives (Google Drive, OneDrive, iCloud) work the same way.</p>
+
+  <h2 class="sect">What the agent actually gets</h2>
+  <ul>
+    <li><b>No network.</b> Every search stays on this Mac.</li>
+    <li><b>No file access.</b> The agent only receives text Lupa already indexed.</li>
+    <li>The index contains only the folders you added.</li>
+  </ul>
+
+  <div class="links">
+    <a href="/en/">Home</a>
+    <a href="/support.html">Support</a>
+    <a href="https://github.com/paeyoungpark-web/lupa-mcp">MCP server source</a>
+    <a href="https://github.com/paeyoungpark-web/lupa-claude-plugin">Claude plugin</a>
+    <a href="/agents.html">한국어</a>
+  </div>
+</div>
+</body>
+</html>

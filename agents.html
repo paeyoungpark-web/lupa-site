@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lupa × AI 도구 연동 — Claude · Aside · Codex · Hermes에서 내 Mac 파일 검색</title>
+<meta name="description" content="Claude Code·Claude Desktop·Aside·Codex·Hermes 등 AI 에이전트에 Lupa를 연결해 Mac의 파일을 이름과 문서 내용으로 찾게 하는 방법. MCP 한 줄 등록, 문제 해결, 에이전트 규칙까지.">
+<link rel="icon" href="assets/icon.png">
+<style>
+  :root {
+    --bg: #0b0b14; --card: #14141f; --fg: #e8e8f0; --muted: #9a9ab0;
+    --accent: #8b80f9; --accent2: #7aa2f7; --line: #26263a; --warn: #f5a97f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--fg);
+         font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+         line-height: 1.7; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 48px 20px 80px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: .02em; }
+  .logo span { color: var(--accent); }
+  h1 { font-size: 1.9rem; margin: 28px 0 8px; }
+  .sub { color: var(--muted); margin-bottom: 32px; }
+  h2.sect { font-size: 1.25rem; margin: 40px 0 14px; }
+  h3 { font-size: 1.02rem; margin: 22px 0 8px; }
+  p { margin-bottom: 12px; }
+  .hero { background: linear-gradient(135deg, rgba(139,128,249,.14), rgba(122,162,247,.10));
+          border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; margin-bottom: 34px; }
+  .hero p { color: var(--muted); font-size: .95rem; margin: 10px 0 0; }
+  pre { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+        padding: 14px 16px; overflow-x: auto; margin: 10px 0 16px; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .92em; }
+  pre code { color: var(--accent2); }
+  p code, li code, td code { background: rgba(139,128,249,.12); border-radius: 4px;
+        padding: 1px 6px; color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: .94rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 9px 10px; text-align: left; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: .88rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+          padding: 16px 18px; margin-bottom: 12px; }
+  .note { border-left: 3px solid var(--warn); padding-left: 14px; color: var(--muted);
+          margin: 16px 0; font-size: .95rem; }
+  ul, ol { margin: 0 0 14px 20px; }
+  li { margin-bottom: 6px; }
+  .ok { color: #8bd5a0; } .no { color: #f08080; }
+  .links { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: .92rem; }
+  .links a { margin-right: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit">Lupa<span>.</span></a></div>
+
+  <h1>AI 도구에서 내 Mac 파일 검색하기</h1>
+  <p class="sub">Claude · Aside · Codex · Hermes 등 어떤 AI 도구에서든 Lupa로 찾게 만드는 방법.
+    설정은 한 줄이면 끝납니다.</p>
+
+  <div class="hero">
+    <strong>등록할 명령은 어디서나 같습니다</strong>
+    <pre><code>npx -y github:paeyoungpark-web/lupa-mcp</code></pre>
+    <p>이 명령을 AI 도구의 <b>MCP 서버</b> 설정에 넣으면, 그 도구가 <code>lupa_search</code>(검색)와
+      <code>lupa_read</code>(문서 본문 읽기)를 쓸 수 있게 됩니다. 검색은 전부 이 Mac 안에서 끝납니다.</p>
+  </div>
+
+  <h2 class="sect">준비 (한 번만)</h2>
+  <ol>
+    <li><a href="https://apps.apple.com/kr/app/id6789231809">App Store에서 Lupa 설치</a></li>
+    <li>앱 실행 → <code>⌘,</code> → 폴더에서 검색할 폴더 등록 → 인덱싱 완료 대기</li>
+    <li>Node.js 확인 — 터미널에서 <code>node -v</code> (없으면 <a href="https://nodejs.org">nodejs.org</a>)</li>
+  </ol>
+
+  <h2 class="sect">도구별 설정</h2>
+
+  <div class="card">
+    <h3>Claude Code</h3>
+    <pre><code>claude mcp add lupa -- npx -y github:paeyoungpark-web/lupa-mcp</code></pre>
+    자연어를 검색어로 바꿔주는 스킬까지 쓰려면:
+    <pre><code>claude plugin marketplace add paeyoungpark-web/lupa-claude-plugin
+claude plugin install lupa-file-search@lupa</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Claude Desktop</h3>
+    <p>Lupa 설정 ▸ 일반 ▸ <b>"Claude Desktop에 연결…"</b> 버튼 한 번이면 끝입니다(Lupa 2.0.1 이상).</p>
+    <p>직접 하려면 <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>:</p>
+    <pre><code>{
+  "mcpServers": {
+    "lupa": {
+      "command": "/bin/zsh",
+      "args": ["-lc", "npx -y github:paeyoungpark-web/lupa-mcp"]
+    }
+  }
+}</code></pre>
+    <p class="note">데스크톱 앱은 터미널의 PATH를 물려받지 않습니다. <code>"command": "npx"</code>로 적으면
+      서버가 뜨지 않으니 위처럼 로그인 셸로 감싸세요.</p>
+  </div>
+
+  <div class="card">
+    <h3>Aside (AI 브라우저)</h3>
+    <p>Lupa 설정 ▸ 일반 ▸ <b>"Aside에 연결…"</b>(Lupa 2.0.1 이상). Aside를 <b>완전히 종료(⌘Q)한 뒤</b> 누르세요.</p>
+    <p>직접 하려면 Aside 설정 ▸ <b>Plugins &amp; MCPs</b> ▸ 서버 추가 ▸ Command 칸에
+      <code>npx -y github:paeyoungpark-web/lupa-mcp</code></p>
+  </div>
+
+  <div class="card">
+    <h3>Codex CLI</h3>
+    <pre><code>codex mcp add lupa -- npx -y github:paeyoungpark-web/lupa-mcp
+codex mcp list   # lupa 가 보이면 성공</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Hermes</h3>
+    <p><code>~/.hermes/config.yaml</code>의 <code>mcp_servers:</code> 아래에 추가합니다.</p>
+    <pre><code>mcp_servers:
+  lupa:
+    command: npx
+    args: ["-y", "github:paeyoungpark-web/lupa-mcp"]</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>그 밖의 MCP 지원 도구</h3>
+    <p>그 도구의 <code>stdio</code> MCP 설정에 아래 중 맞는 형식으로 넣으세요.</p>
+    <table>
+      <tr><th>형식</th><th>값</th></tr>
+      <tr><td>명령 한 줄</td><td><code>npx -y github:paeyoungpark-web/lupa-mcp</code></td></tr>
+      <tr><td>command + args</td><td><code>npx</code> / <code>["-y", "github:paeyoungpark-web/lupa-mcp"]</code></td></tr>
+      <tr><td>PATH를 못 찾는 GUI 앱</td><td><code>/bin/zsh</code> / <code>["-lc", "npx -y github:paeyoungpark-web/lupa-mcp"]</code></td></tr>
+    </table>
+  </div>
+
+  <h2 class="sect">왜 "명령줄"이 아니라 MCP인가</h2>
+  <p>요즘 에이전트는 셸 명령을 <b>자기 샌드박스 안에서</b> 실행합니다. Lupa의 명령줄 도구는 App Store
+    규정에 따라 샌드박스로 서명돼 있어서, 샌드박스 안에서 또 띄우면 macOS가 기동을 막습니다.</p>
+  <table>
+    <tr><th>환경</th><th>명령줄 도구 직접 실행</th></tr>
+    <tr><td>터미널 · Claude Code</td><td class="ok">정상</td></tr>
+    <tr><td>Aside 셸 도구</td><td class="no">종료 코드 133</td></tr>
+    <tr><td>Codex 샌드박스</td><td class="no">종료 코드 134</td></tr>
+  </table>
+  <p><b>MCP 서버는 샌드박스 밖에서 실행됩니다.</b> 그래서 같은 도구라도 MCP로 등록하면 정상 동작합니다.</p>
+
+  <h2 class="sect">연결 확인</h2>
+  <p>도구 목록에 <code>lupa_search</code>와 <code>lupa_read</code>가 보이면 성공입니다.
+    "Lupa로 계약서 찾아줘"처럼 물어보세요.</p>
+  <ul>
+    <li><code>lupa_search</code> — 파일명과 문서 본문 검색. 폴더명 검색 옵션도 있습니다.</li>
+    <li><code>lupa_read</code> — 찾은 파일의 <b>본문 텍스트</b>를 받습니다. 파일을 열지 않고 색인에 저장된
+      텍스트를 돌려주므로, 에이전트가 직접 못 읽는 한글(HWP)·스캔 PDF도 요약할 수 있습니다.</li>
+  </ul>
+
+  <h2 class="sect">문제 해결</h2>
+  <table>
+    <tr><th>증상</th><th>해결</th></tr>
+    <tr><td>종료 코드 <b>133 / 134</b>, <code>Trace/BPT trap</code></td>
+        <td>샌드박스 안에서 명령줄 도구를 실행한 것입니다. MCP로 등록하세요. 다시 시도하거나
+            파일을 복사해도 같은 이유로 실패합니다.</td></tr>
+    <tr><td><code>npx: command not found</code></td>
+        <td>GUI 앱이 PATH를 못 봅니다. <code>/bin/zsh -lc "npx …"</code> 형태로 감싸세요.</td></tr>
+    <tr><td><code>index_not_found</code></td>
+        <td>Lupa 앱에서 폴더를 등록하고 인덱싱이 끝나기를 기다리세요.</td></tr>
+    <tr><td>첫 호출이 10~20초</td><td>패키지를 처음 내려받는 중입니다. 두 번째부터는 즉시입니다.</td></tr>
+    <tr><td>"악성 코드가 없음을 확인할 수 없습니다" 경고</td>
+        <td>에이전트가 소스에서 직접 빌드한 파일입니다. 지우고 MCP로 등록하세요.
+            App Store에서 받은 앱과는 무관합니다.</td></tr>
+  </table>
+
+  <h2 class="sect">에이전트에게 주는 규칙</h2>
+  <p>스킬이나 프롬프트에 그대로 붙여넣으면 우회 시도를 막을 수 있습니다.</p>
+  <pre><code>로컬 파일을 찾을 때는 find·grep·mdfind 대신 Lupa를 쓴다.
+
+1. lupa_search / lupa_read 도구가 있으면 그것만 쓴다.
+2. 도구가 없으면 사용자에게 Lupa MCP 등록을 안내하고 멈춘다.
+3. 다음은 절대 하지 않는다 — 전부 실패하거나 결과를 망친다.
+   - lupa-search 바이너리를 셸로 실행 (샌드박스에서 133·134로 죽는다)
+   - 소스에서 빌드 (서명 없는 파일 → macOS 보안 경고)
+   - 색인 SQLite를 직접 조회 (한국어 토크나이저·랭킹이 빠져 결과가 크게 나빠진다)
+4. 검색 문법: n:이름 c:내용 f:폴더 -제외 "정확구문" 종류:PDF 크기:>10mb 날짜:이번주 .hwp 계약*
+5. 본문이 필요하면 lupa_read로 받는다.</code></pre>
+
+  <h2 class="sect">Obsidian 같은 앱은 "등록"입니다</h2>
+  <p>Obsidian·메모 앱은 에이전트가 아니라 파일을 만드는 앱입니다. 볼트 폴더를 Lupa에 등록하면
+    Markdown 본문까지 검색됩니다. 클라우드 드라이브(Google Drive·OneDrive·iCloud)도 같은 방식으로
+    폴더만 등록하면 됩니다.</p>
+
+  <h2 class="sect">에이전트에게 무엇을 주는가</h2>
+  <ul>
+    <li><b>네트워크를 쓰지 않습니다.</b> 검색은 전부 이 Mac 안에서 끝납니다.</li>
+    <li><b>파일 접근 권한은 주지 않습니다.</b> 에이전트가 받는 것은 Lupa가 미리 색인해 둔 텍스트뿐입니다.</li>
+    <li>색인에는 사용자가 등록한 폴더만 들어갑니다.</li>
+  </ul>
+
+  <div class="links">
+    <a href="/">홈</a>
+    <a href="/support.html">지원</a>
+    <a href="https://github.com/paeyoungpark-web/lupa-mcp">MCP 서버 소스</a>
+    <a href="https://github.com/paeyoungpark-web/lupa-claude-plugin">Claude 플러그인</a>
+    <a href="/en/agents.html">English</a>
+  </div>
+</div>
+</body>
+</html>
