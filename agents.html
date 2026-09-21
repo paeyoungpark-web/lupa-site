@@ -59,7 +59,7 @@
 
   <div class="hero">
     <strong>등록할 명령은 어디서나 같습니다</strong>
-    <pre><code>npx -y github:paeyoungpark-web/lupa-mcp</code></pre>
+    <pre><code>npx -y lupa-mcp</code></pre>
     <p>이 명령을 AI 도구의 <b>MCP 서버</b> 설정에 넣으면, 그 도구가 <code>lupa_search</code>(검색)와
       <code>lupa_read</code>(문서 본문 읽기)를 쓸 수 있게 됩니다. 검색은 전부 이 Mac 안에서 끝납니다.</p>
   </div>
@@ -75,7 +75,7 @@
 
   <div class="card">
     <h3>Claude Code</h3>
-    <pre><code>claude mcp add lupa -- npx -y github:paeyoungpark-web/lupa-mcp</code></pre>
+    <pre><code>claude mcp add lupa -- npx -y lupa-mcp</code></pre>
     자연어를 검색어로 바꿔주는 스킬까지 쓰려면:
     <pre><code>claude plugin marketplace add paeyoungpark-web/lupa-claude-plugin
 claude plugin install lupa-file-search@lupa</code></pre>
@@ -89,7 +89,7 @@ claude plugin install lupa-file-search@lupa</code></pre>
   "mcpServers": {
     "lupa": {
       "command": "/bin/zsh",
-      "args": ["-lc", "npx -y github:paeyoungpark-web/lupa-mcp"]
+      "args": ["-lc", "npx -y lupa-mcp"]
     }
   }
 }</code></pre>
@@ -101,12 +101,12 @@ claude plugin install lupa-file-search@lupa</code></pre>
     <h3>Aside (AI 브라우저)</h3>
     <p>Lupa 설정 ▸ 일반 ▸ <b>"Aside에 연결…"</b>(Lupa 2.0.1 이상). Aside를 <b>완전히 종료(⌘Q)한 뒤</b> 누르세요.</p>
     <p>직접 하려면 Aside 설정 ▸ <b>Plugins &amp; MCPs</b> ▸ 서버 추가 ▸ Command 칸에
-      <code>npx -y github:paeyoungpark-web/lupa-mcp</code></p>
+      <code>npx -y lupa-mcp</code></p>
   </div>
 
   <div class="card">
     <h3>Codex CLI</h3>
-    <pre><code>codex mcp add lupa -- npx -y github:paeyoungpark-web/lupa-mcp
+    <pre><code>codex mcp add lupa -- npx -y lupa-mcp
 codex mcp list   # lupa 가 보이면 성공</code></pre>
   </div>
 
@@ -116,7 +116,7 @@ codex mcp list   # lupa 가 보이면 성공</code></pre>
     <pre><code>mcp_servers:
   lupa:
     command: npx
-    args: ["-y", "github:paeyoungpark-web/lupa-mcp"]</code></pre>
+    args: ["-y", "lupa-mcp"]</code></pre>
   </div>
 
   <div class="card">
@@ -124,9 +124,9 @@ codex mcp list   # lupa 가 보이면 성공</code></pre>
     <p>그 도구의 <code>stdio</code> MCP 설정에 아래 중 맞는 형식으로 넣으세요.</p>
     <table>
       <tr><th>형식</th><th>값</th></tr>
-      <tr><td>명령 한 줄</td><td><code>npx -y github:paeyoungpark-web/lupa-mcp</code></td></tr>
-      <tr><td>command + args</td><td><code>npx</code> / <code>["-y", "github:paeyoungpark-web/lupa-mcp"]</code></td></tr>
-      <tr><td>PATH를 못 찾는 GUI 앱</td><td><code>/bin/zsh</code> / <code>["-lc", "npx -y github:paeyoungpark-web/lupa-mcp"]</code></td></tr>
+      <tr><td>명령 한 줄</td><td><code>npx -y lupa-mcp</code></td></tr>
+      <tr><td>command + args</td><td><code>npx</code> / <code>["-y", "lupa-mcp"]</code></td></tr>
+      <tr><td>PATH를 못 찾는 GUI 앱</td><td><code>/bin/zsh</code> / <code>["-lc", "npx -y lupa-mcp"]</code></td></tr>
     </table>
   </div>
 

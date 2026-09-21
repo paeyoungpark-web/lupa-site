@@ -59,7 +59,7 @@
 
   <div class="hero">
     <strong>The command is the same everywhere</strong>
-    <pre><code>npx -y github:paeyoungpark-web/lupa-mcp</code></pre>
+    <pre><code>npx -y lupa-mcp</code></pre>
     <p>Put this in your AI tool's <b>MCP server</b> settings and it gains two tools:
       <code>lupa_search</code> (search) and <code>lupa_read</code> (read a document's text).
       Everything runs on this Mac — no network.</p>
@@ -76,7 +76,7 @@
 
   <div class="card">
     <h3>Claude Code</h3>
-    <pre><code>claude mcp add lupa -- npx -y github:paeyoungpark-web/lupa-mcp</code></pre>
+    <pre><code>claude mcp add lupa -- npx -y lupa-mcp</code></pre>
     To also install the skill that turns plain language into Lupa queries:
     <pre><code>claude plugin marketplace add paeyoungpark-web/lupa-claude-plugin
 claude plugin install lupa-file-search@lupa</code></pre>
@@ -90,7 +90,7 @@ claude plugin install lupa-file-search@lupa</code></pre>
   "mcpServers": {
     "lupa": {
       "command": "/bin/zsh",
-      "args": ["-lc", "npx -y github:paeyoungpark-web/lupa-mcp"]
+      "args": ["-lc", "npx -y lupa-mcp"]
     }
   }
 }</code></pre>
@@ -102,12 +102,12 @@ claude plugin install lupa-file-search@lupa</code></pre>
     <h3>Aside (AI browser)</h3>
     <p>Lupa Settings ▸ General ▸ <b>"Connect to Aside…"</b> (Lupa 2.0.1+). <b>Quit Aside (⌘Q) first.</b></p>
     <p>Or in Aside: Settings ▸ <b>Plugins &amp; MCPs</b> ▸ add a server ▸ Command:
-      <code>npx -y github:paeyoungpark-web/lupa-mcp</code></p>
+      <code>npx -y lupa-mcp</code></p>
   </div>
 
   <div class="card">
     <h3>Codex CLI</h3>
-    <pre><code>codex mcp add lupa -- npx -y github:paeyoungpark-web/lupa-mcp
+    <pre><code>codex mcp add lupa -- npx -y lupa-mcp
 codex mcp list   # lupa should appear</code></pre>
   </div>
 
@@ -117,7 +117,7 @@ codex mcp list   # lupa should appear</code></pre>
     <pre><code>mcp_servers:
   lupa:
     command: npx
-    args: ["-y", "github:paeyoungpark-web/lupa-mcp"]</code></pre>
+    args: ["-y", "lupa-mcp"]</code></pre>
   </div>
 
   <div class="card">
@@ -125,9 +125,9 @@ codex mcp list   # lupa should appear</code></pre>
     <p>Use whichever shape that tool's <code>stdio</code> MCP settings expect.</p>
     <table>
       <tr><th>Shape</th><th>Value</th></tr>
-      <tr><td>Single command line</td><td><code>npx -y github:paeyoungpark-web/lupa-mcp</code></td></tr>
-      <tr><td>command + args</td><td><code>npx</code> / <code>["-y", "github:paeyoungpark-web/lupa-mcp"]</code></td></tr>
-      <tr><td>GUI app without shell PATH</td><td><code>/bin/zsh</code> / <code>["-lc", "npx -y github:paeyoungpark-web/lupa-mcp"]</code></td></tr>
+      <tr><td>Single command line</td><td><code>npx -y lupa-mcp</code></td></tr>
+      <tr><td>command + args</td><td><code>npx</code> / <code>["-y", "lupa-mcp"]</code></td></tr>
+      <tr><td>GUI app without shell PATH</td><td><code>/bin/zsh</code> / <code>["-lc", "npx -y lupa-mcp"]</code></td></tr>
     </table>
   </div>
 
