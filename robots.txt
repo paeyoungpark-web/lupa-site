@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://lupa.kr/sitemap.xml
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /

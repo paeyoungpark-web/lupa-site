@@ -1,0 +1,13 @@
+# Lupa — macOS 파일·한글(HWP) 내용 검색 앱
+
+> 파일 이름이 기억나지 않아도 문서 속 단어 하나로 한글(HWP) 내용까지 0.03초에 찾는 macOS 검색 앱.
+
+## 핵심
+- 플랫폼: macOS (Apple Silicon 최적화)
+- 특징: HWP·HWPX 내용검색, 스캔 PDF OCR, 0.03초 검색
+- 가격: 무료
+- App Store: https://apps.apple.com/kr/app/id6789231809
+- 홈페이지: https://lupa.kr
+- 만든 사람: 박배영 (Paeyoung Park)
+- CLI: lupa-search (AI 에이전트·스크립트에서 사용 가능)
+- 포트폴리오: https://apps.lupa.kr
