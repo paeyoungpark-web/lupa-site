@@ -3,11 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lupa — 기억의 조각으로 파일을 찾다 | macOS 파일·한글(HWP) 내용 검색</title>
-<meta name="description" content="파일 이름이 기억나지 않아도 괜찮습니다. 문서 속 단어 하나로 한글(HWP) 내용까지 0.03초에 찾는 macOS 검색 앱. 모든 처리는 내 Mac 안에서만.">
+<title>Lupa — 기억의 조각으로 파일을 찾다 | Mac·Windows 파일·문서 내용 검색</title>
+<meta name="description" content="파일 이름이 기억나지 않아도 괜찮습니다. 문서 속 단어 하나로 내용까지 찾는 로컬 검색 앱. macOS는 한글(HWP)·스캔 PDF OCR까지, Windows는 AI 에이전트 연동까지. 모든 처리는 내 PC 안에서만.">
+<link rel="canonical" href="https://lupa.kr/">
+<!-- 두 언어판이 서로를 가리켜야 검색엔진이 중복이 아니라 번역으로 본다. -->
+<link rel="alternate" hreflang="ko" href="https://lupa.kr/">
+<link rel="alternate" hreflang="en" href="https://lupa.kr/en/">
+<link rel="alternate" hreflang="x-default" href="https://lupa.kr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lupa">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://lupa.kr/">
 <meta property="og:title" content="Lupa — 기억의 조각으로 파일을 찾다">
-<meta property="og:description" content="문서 속 단어 하나로, 한글(HWP) 내용까지 0.03초. macOS 전용 로컬 파일 검색.">
-<meta property="og:image" content="assets/shot-search.png">
+<meta property="og:description" content="문서 속 단어 하나로 내용까지. Mac과 Windows에서 쓰는 완전 로컬 파일 검색.">
+<!-- 절대 URL이어야 한다. 상대경로를 쓰면 카카오톡·슬랙·X의 링크 미리보기에
+     이미지가 아예 뜨지 않는다. -->
+<meta property="og:image" content="https://lupa.kr/assets/shot-search.png">
+<meta property="og:image:width" content="2880">
+<meta property="og:image:height" content="1800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lupa — 기억의 조각으로 파일을 찾다">
+<meta name="twitter:description" content="문서 속 단어 하나로 내용까지. Mac과 Windows에서 쓰는 완전 로컬 파일 검색.">
+<meta name="twitter:image" content="https://lupa.kr/assets/shot-search.png">
 <link rel="icon" href="assets/icon.png">
 <style>
   /* ── Lupa 계측기 디자인 토큰 ─────────────────────────── */
@@ -256,11 +273,16 @@
   <img class="icon" src="assets/icon.png" alt="Lupa 앱 아이콘">
   <h1><span class="q">그 파일… 이름이 뭐였더라?</span>기억의 조각으로 찾습니다</h1>
   <p class="tag">파일명, 문서 속 단어, 폴더, 날짜 — 생각나는 조각을 아무거나 던지세요.
-  <b>한글(HWP) 문서 내용까지</b>, 전부 이 Mac 안에서만.</p>
-  <div class="btns">
-    <a class="btn primary" href="https://apps.apple.com/kr/app/id6789231809" id="store">App Store에서 받기 — 무료</a>
+  Mac과 Windows 모두, <b>문서 내용까지</b> 전부 내 컴퓨터 안에서만.
+  <span style="opacity:.7">(한글 HWP·스캔 PDF OCR은 현재 Mac 전용)</span></p>
+  <div class="btns" id="dl">
+    <a class="btn primary" id="dl-mac" href="https://apps.apple.com/kr/app/id6789231809">Mac App Store — 무료</a>
+    <a class="btn ghost" id="dl-win" href="https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip">Windows용 내려받기 — 무료</a>
     <a class="btn ghost" href="#recipes">어떻게 찾는지 보기</a>
   </div>
+  <p id="dl-note" style="color:var(--t3);font-size:12.5px;margin-top:10px">
+    macOS 12 이상 · Windows 10/11 (x64) · 둘 다 무료
+  </p>
 
   <!-- ⌥Space 패널 실물 목업 (CSS) -->
   <div class="heropanel" aria-label="Lupa 검색 패널 예시">
@@ -548,7 +570,8 @@
   <h2>잊기 전에, 찾으세요.</h2>
   <p class="en">Find it before you forget it</p>
   <div class="btns">
-    <a class="btn primary" href="https://apps.apple.com/kr/app/id6789231809">App Store에서 받기 — 무료</a>
+    <a class="btn primary" href="https://apps.apple.com/kr/app/id6789231809">Mac App Store — 무료</a>
+    <a class="btn ghost" href="https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip">Windows용 내려받기 — 무료</a>
     <a class="btn ghost" href="https://buymeacoffee.com/paeyoungpaq" target="_blank" rel="noopener">☕ 커피 한 잔 후원</a>
   </div>
   <p style="color:var(--t3);font-size:13px;margin-top:16px">전 기능 무료입니다. 광고도, 계정도 없습니다. 마음에 드셨다면 커피 한 잔으로 응원해 주세요.</p>
@@ -558,11 +581,33 @@
   <div class="wrap">
     <div>© 2026 Paeyoung Park · Lupa</div>
     <div>
+      <a href="https://github.com/paeyoungpark-web/lupa-win" target="_blank" rel="noopener">Windows 소스</a> ·
+      <a href="https://github.com/paeyoungpark-web/lupa-mcp" target="_blank" rel="noopener">MCP 서버</a> ·
+      <a href="https://github.com/paeyoungpark-web/lupa-claude-plugin" target="_blank" rel="noopener">Claude Code 플러그인</a> ·
       <a href="https://github.com/paeyoungpark-web/lupa-legal/blob/main/PRIVACY.md">개인정보처리방침</a> ·
       <a href="https://github.com/paeyoungpark-web/lupa-legal">지원</a>
     </div>
   </div>
 </footer>
 
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Lupa for Windows","applicationCategory":"UtilitiesApplication","operatingSystem":"Windows 10, Windows 11","url":"https://lupa.kr/","downloadUrl":"https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip","softwareVersion":"0.1.0","isAccessibleForFree":true,"description":"\uc708\ub3c4\uc6b0 \ud30c\uc77c\u00b7\ubb38\uc11c \ub0b4\uc6a9 \uac80\uc0c9. AI \uc5d0\uc774\uc804\ud2b8\uac00 MCP\ub85c \ubd99\ub294 \ub85c\uceec \uc0c9\uc778.","author":{"@type":"Person","name":"\ubc15\ubc30\uc601"},"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script>
+// 방문자가 쓰는 OS의 버튼을 주 버튼으로 올린다. 스크립트가 없거나 실패하면
+// Mac 버튼이 주 버튼으로 남는다 — 어느 쪽도 사라지지 않는다.
+(function(){
+  try{
+    var row=document.getElementById('dl'),
+        mac=document.getElementById('dl-mac'),
+        win=document.getElementById('dl-win');
+    if(!row||!mac||!win) return;
+    var ua=navigator.userAgent||'';
+    var isWin=/Windows NT/i.test(ua)&&!/Android/i.test(ua);
+    if(!isWin) return;
+    mac.className='btn ghost';
+    win.className='btn primary';
+    row.insertBefore(win,mac);
+  }catch(e){}
+})();
+</script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lupa × AI 도구 연동 — Claude · Aside · Codex · Hermes에서 내 Mac 파일 검색</title>
-<meta name="description" content="Claude Code·Claude Desktop·Aside·Codex·Hermes 등 AI 에이전트에 Lupa를 연결해 Mac의 파일을 이름과 문서 내용으로 찾게 하는 방법. MCP 한 줄 등록, 문제 해결, 에이전트 규칙까지.">
+<title>Lupa × AI 도구 연동 — Claude · Aside · Codex · Hermes에서 Mac·Windows 파일 검색</title>
+<meta name="description" content="Claude Code·Claude Desktop·Aside·Codex·Hermes 등 AI 에이전트에 Lupa를 연결해 Mac과 Windows의 파일을 이름과 문서 내용으로 찾게 하는 방법. MCP 등록, 문제 해결, 에이전트 규칙까지.">
 <link rel="icon" href="assets/icon.png">
 <style>
   :root {
@@ -53,7 +53,7 @@
 <div class="wrap">
   <div class="logo"><a href="/" style="color:inherit">Lupa<span>.</span></a></div>
 
-  <h1>AI 도구에서 내 Mac 파일 검색하기</h1>
+  <h1>AI 도구에서 내 파일 검색하기 — Mac · Windows</h1>
   <p class="sub">Claude · Aside · Codex · Hermes 등 어떤 AI 도구에서든 Lupa로 찾게 만드는 방법.
     설정은 한 줄이면 끝납니다.</p>
 
@@ -63,6 +63,17 @@
     <p>이 명령을 AI 도구의 <b>MCP 서버</b> 설정에 넣으면, 그 도구가 <code>lupa_search</code>(검색)와
       <code>lupa_read</code>(문서 본문 읽기)를 쓸 수 있게 됩니다. 검색은 전부 이 Mac 안에서 끝납니다.</p>
   </div>
+
+  <h2 class="sect">Windows에서도 됩니다</h2>
+  <p>Windows판 Lupa는 <b>MCP 서버와 CLI를 앱에 내장</b>하고 있어서, 아래의 npx 설치 과정이 필요 없습니다.
+  앱의 <b>설정 → AI 에이전트</b>에서 <b>연결</b>을 누르면 Claude Desktop과 Claude Code의 설정 파일에
+  Lupa가 등록됩니다. 기존 설정은 보존 사본을 만든 뒤 병합하고, 결과가 어긋나면 되돌립니다.
+  등록 후에는 에이전트를 다시 시작하십시오.</p>
+  <p>검색 문법과 도구 이름(<code>search_files</code>, <code>get_content</code>)은 Mac과 같습니다 —
+  이 페이지의 규칙과 예시가 그대로 통합니다. 다만 Windows판은 아직 <b>HWP 본문과 스캔 PDF OCR을
+  지원하지 않습니다</b>(이름으로는 찾힙니다).</p>
+  <p><a class="btn ghost" href="https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip">Windows용 내려받기 — 무료</a>
+  <a class="btn ghost" href="https://github.com/paeyoungpark-web/lupa-win" target="_blank" rel="noopener">GitHub에서 소스 보기</a></p>
 
   <h2 class="sect">준비 (한 번만)</h2>
   <ol>

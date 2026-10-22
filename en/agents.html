@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lupa × AI tools — search your Mac's files from Claude, Aside, Codex, Hermes</title>
-<meta name="description" content="Connect Lupa to Claude Code, Claude Desktop, Aside, Codex, Hermes and other AI agents so they can find your Mac's files by name and by what is written inside documents. One-line MCP setup, troubleshooting, agent rules.">
+<title>Lupa × AI tools — search your Mac and Windows files from Claude, Aside, Codex, Hermes</title>
+<meta name="description" content="Connect Lupa to Claude Code, Claude Desktop, Aside, Codex, Hermes and other AI agents so they can find your files on Mac and Windows by name and by what is written inside documents. MCP setup, troubleshooting, agent rules.">
 <link rel="icon" href="../assets/icon.png">
 <style>
   :root {
@@ -53,7 +53,7 @@
 <div class="wrap">
   <div class="logo"><a href="/" style="color:inherit">Lupa<span>.</span></a></div>
 
-  <h1>Search your Mac from any AI tool</h1>
+  <h1>Search your files from any AI tool — Mac and Windows</h1>
   <p class="sub">How to let Claude, Aside, Codex, Hermes — any AI tool — find files with Lupa.
     Setup is a single line.</p>
 
@@ -64,6 +64,17 @@
       <code>lupa_search</code> (search) and <code>lupa_read</code> (read a document's text).
       Everything runs on this Mac — no network.</p>
   </div>
+
+  <h2 class="sect">Windows works too</h2>
+  <p>The Windows build <b>ships the MCP server and CLI inside the app</b>, so the npx step below is not
+  needed. Open <b>Settings → AI agents</b> and press <b>Connect</b>: Lupa is registered in the Claude
+  Desktop and Claude Code config files. The existing config is copied aside, merged, verified, and
+  rolled back if anything does not match. Restart the agent afterwards.</p>
+  <p>The query syntax and the tool names (<code>search_files</code>, <code>get_content</code>) are the
+  same as on macOS, so everything on this page applies. The Windows build does not yet read
+  <b>HWP content or run OCR on scanned PDFs</b> — those files are still findable by name.</p>
+  <p><a class="btn ghost" href="https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip">Download for Windows — Free</a>
+  <a class="btn ghost" href="https://github.com/paeyoungpark-web/lupa-win" target="_blank" rel="noopener">View source on GitHub</a></p>
 
   <h2 class="sect">Setup (once)</h2>
   <ol>

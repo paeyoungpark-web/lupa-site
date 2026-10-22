@@ -3,11 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lupa — Find files from fragments of memory | macOS file &amp; content search</title>
-<meta name="description" content="Can't remember the file name? One word from inside the document is enough. Lupa searches names and full content — even Korean HWP files — in 0.03s, entirely on your Mac.">
+<title>Lupa — Find files from fragments of memory | Mac & Windows file and content search</title>
+<meta name="description" content="Can't remember the file name? One word from inside the document is enough. Lupa searches names and full content locally — Korean HWP and OCR on macOS, AI agent access on Windows. Nothing leaves your machine.">
+<link rel="canonical" href="https://lupa.kr/en/">
+<!-- 두 언어판이 서로를 가리켜야 검색엔진이 중복이 아니라 번역으로 본다. -->
+<link rel="alternate" hreflang="ko" href="https://lupa.kr/">
+<link rel="alternate" hreflang="en" href="https://lupa.kr/en/">
+<link rel="alternate" hreflang="x-default" href="https://lupa.kr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lupa">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://lupa.kr/en/">
 <meta property="og:title" content="Lupa — Find files from fragments of memory">
-<meta property="og:description" content="One word from inside a document is enough. Local file & content search for macOS.">
-<meta property="og:image" content="../assets/shot-search.png">
+<meta property="og:description" content="One word from inside a document is enough. Fully local file and content search for Mac and Windows.">
+<!-- 절대 URL이어야 한다. 상대경로를 쓰면 카카오톡·슬랙·X의 링크 미리보기에
+     이미지가 아예 뜨지 않는다. -->
+<meta property="og:image" content="https://lupa.kr/assets/shot-search.png">
+<meta property="og:image:width" content="2880">
+<meta property="og:image:height" content="1800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lupa — Find files from fragments of memory">
+<meta name="twitter:description" content="One word from inside a document is enough. Fully local file and content search for Mac and Windows.">
+<meta name="twitter:image" content="https://lupa.kr/assets/shot-search.png">
 <link rel="icon" href="../assets/icon.png">
 <style>
   /* ── Lupa instrument design tokens ─────────────────────── */
@@ -250,9 +267,11 @@
   <img class="icon" src="../assets/icon.png" alt="Lupa app icon">
   <h1><span class="q">What was that file called again?</span>Find it from fragments of memory</h1>
   <p class="tag">A word from inside the document, a folder, a date — throw in whatever you remember.
-  Lupa searches file names <b>and full content</b>, entirely on your Mac.</p>
-  <div class="btns">
-    <a class="btn primary" href="https://apps.apple.com/app/id6789231809">Download on the App Store — Free</a>
+  Lupa searches file names <b>and full content</b> on Mac and Windows, entirely on your own machine.
+  <span style="opacity:.7">(Korean HWP and scanned-PDF OCR are macOS only for now)</span></p>
+  <div class="btns" id="dl">
+    <a class="btn primary" id="dl-mac" href="https://apps.apple.com/app/id6789231809">Mac App Store — Free</a>
+    <a class="btn ghost" id="dl-win" href="https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip">Download for Windows — Free</a>
     <a class="btn ghost" href="#recipes">See how it works</a>
   </div>
 
@@ -543,7 +562,8 @@
   <h2>Find it before you forget it.</h2>
   <p class="en">Local search for macOS, built for real memory</p>
   <div class="btns">
-    <a class="btn primary" href="https://apps.apple.com/app/id6789231809">Download on the App Store — Free</a>
+    <a class="btn primary" href="https://apps.apple.com/app/id6789231809">Mac App Store — Free</a>
+    <a class="btn ghost" href="https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip">Download for Windows — Free</a>
     <a class="btn ghost" href="https://buymeacoffee.com/paeyoungpaq" target="_blank" rel="noopener">☕ Buy me a coffee</a>
   </div>
   <p style="color:var(--t3);font-size:13px;margin-top:16px">Completely free — no ads, no account. If it saved you time, a coffee keeps it going.</p>
@@ -553,11 +573,34 @@
   <div class="wrap">
     <div>© 2026 Paeyoung Park · Lupa</div>
     <div>
+      <a href="https://github.com/paeyoungpark-web/lupa-win" target="_blank" rel="noopener">Windows source</a> ·
+      <a href="https://github.com/paeyoungpark-web/lupa-mcp" target="_blank" rel="noopener">MCP server</a> ·
+      <a href="https://github.com/paeyoungpark-web/lupa-claude-plugin" target="_blank" rel="noopener">Claude Code plugin</a> ·
       <a href="https://github.com/paeyoungpark-web/lupa-legal/blob/main/PRIVACY.md">Privacy Policy</a> ·
       <a href="https://github.com/paeyoungpark-web/lupa-legal">Support</a>
     </div>
   </div>
 </footer>
 
+<script>
+// 방문자가 쓰는 OS의 버튼을 주 버튼으로 올린다. 스크립트가 없거나 실패하면
+// Mac 버튼이 주 버튼으로 남는다 — 어느 쪽도 사라지지 않는다.
+(function(){
+  try{
+    var row=document.getElementById('dl'),
+        mac=document.getElementById('dl-mac'),
+        win=document.getElementById('dl-win');
+    if(!row||!mac||!win) return;
+    var ua=navigator.userAgent||'';
+    var isWin=/Windows NT/i.test(ua)&&!/Android/i.test(ua);
+    if(!isWin) return;
+    mac.className='btn ghost';
+    win.className='btn primary';
+    row.insertBefore(win,mac);
+  }catch(e){}
+})();
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Lupa","applicationCategory":"UtilitiesApplication","operatingSystem":"macOS 12 or later","url":"https://lupa.kr/en/","downloadUrl":"https://apps.apple.com/app/id6789231809","softwareVersion":"1.0","isAccessibleForFree":true,"description":"Local file and content search for macOS. Finds a document from one word inside it, including Korean HWP files and OCR'd scans, in about 30ms. Nothing leaves the Mac.","author":{"@type":"Person","name":"Paeyoung Park","url":"https://lupa.kr"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Lupa for Windows","applicationCategory":"UtilitiesApplication","operatingSystem":"Windows 10, Windows 11","url":"https://lupa.kr/en/","downloadUrl":"https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip","softwareVersion":"0.1.0","isAccessibleForFree":true,"description":"Local file and document-content search for Windows, exposed to AI agents over MCP. Korean 2-gram indexing matches substrings and particle-suffixed forms.","author":{"@type":"Person","name":"Paeyoung Park","url":"https://lupa.kr"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 </body>
 </html>
