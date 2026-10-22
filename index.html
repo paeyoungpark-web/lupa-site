@@ -200,6 +200,13 @@
     font-size:10px;letter-spacing:.08em;color:var(--t3)}
 
   /* ── HWP ── */
+  .win{background:var(--sunk);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .win .badge{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ground);background:var(--index);border-radius:3px;padding:3px 8px 4px;margin-bottom:14px}
+  .win .note{margin-top:22px;padding:14px 16px;background:var(--wash);border:1px solid var(--hair);
+    border-radius:8px;color:var(--t2);font-size:13.5px;line-height:1.65;max-width:640px}
+  .win .note b{color:var(--t1)}
+  .win .sha{font-family:var(--mono);font-size:12px;color:var(--t3);margin-top:14px}
   .hwp{background:var(--surface);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
   .checks{margin-top:24px;display:grid;gap:0;border-top:1px solid var(--hair2);max-width:640px}
   .checks div{color:var(--t2);font-size:15px;padding:12px 0;
@@ -470,6 +477,40 @@
       <div><span>✓</span><em style="font-style:normal">조사 자동 처리 · 단어 중간 조각 검색 ("보호정책"으로 "정보보호정책" 문서 찾기)</em></div>
     </div>
     <figure class="shot"><img src="assets/shot-multi.png" alt="멀티 키워드 그룹핑 검색 화면" loading="lazy"></figure>
+  </div>
+</section>
+<section class="win">
+  <div class="wrap" style="padding-top:76px;padding-bottom:76px">
+    <span class="badge">New &middot; Windows</span>
+    <div class="shead"><span class="tick">WIN</span><span class="lbl">윈도우용</span></div>
+    <h2>윈도우에서도, AI 에이전트가 내 파일을 찾습니다</h2>
+    <p class="sub">폴더를 등록하면 <b>파일 이름과 문서 내용</b>을 자체 색인으로 찾습니다.
+    그 색인을 <b>MCP 서버와 CLI로 열어주기 때문에</b>, Claude Code 같은 에이전트가
+    디스크를 직접 뒤지는 대신 Lupa에게 물어보게 됩니다. 전부 이 PC 안에서만.</p>
+
+    <div class="checks">
+      <div><span>✓</span><em style="font-style:normal">한국어 2-gram 색인 — <b>“보호정책”으로 “정보보호정책” 문서가 찾힙니다.</b> 조사가 붙은 “동방을”도 “동방”으로 매칭됩니다</em></div>
+      <div><span>✓</span><em style="font-style:normal">문서 내용 검색 — PDF · Word · Excel · PowerPoint · 텍스트</em></div>
+      <div><span>✓</span><em style="font-style:normal">버튼 하나로 Claude Desktop · Claude Code에 연결 — 기존 설정은 보존 사본을 만들고, 어긋나면 되돌립니다</em></div>
+      <div><span>✓</span><em style="font-style:normal">검색 문법 동일 — <code>c:계약</code> <code>-임시</code> <code>종류:PDF</code> <code>크기:&gt;10mb</code> <code>날짜:이번주</code></em></div>
+      <div><span>✓</span><em style="font-style:normal">네트워크 코드가 없습니다 · 오픈소스 · .NET 설치 필요 없음</em></div>
+    </div>
+
+    <div class="note">
+      <b>맥용과 다른 점을 먼저 밝힙니다.</b> 윈도우용은 첫 공개 버전(v0.1.0)이라
+      위 한글 문서 섹션의 기능이 아직 들어 있지 않습니다 — <b>HWP 본문 검색과 스캔 PDF OCR은 미구현</b>이고
+      (이름으로는 찾힙니다), 파일명만 보는 속도는 Everything 쪽이 더 빠릅니다.
+      윈도우용의 쓸모는 <b>내용 검색과 에이전트 연결</b>에 있습니다.<br><br>
+      <b>아직 코드 서명이 없습니다.</b> 처음 실행하면 SmartScreen이 “Windows가 PC를 보호했습니다”를
+      띄우니 <b>추가 정보 → 실행</b>을 눌러 주십시오. 찜찜하시면 소스를 직접 빌드하셔도 됩니다.
+    </div>
+
+    <div class="btns" style="margin-top:26px">
+      <a class="btn primary" href="https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip">윈도우용 내려받기 — 무료</a>
+      <a class="btn ghost" href="https://github.com/paeyoungpark-web/lupa-win" target="_blank" rel="noopener">GitHub에서 소스 보기</a>
+    </div>
+    <p class="sha">Windows 10 / 11 (x64) · 압축 파일 약 71MB ·
+      <a href="https://github.com/paeyoungpark-web/lupa-win/releases/latest" style="color:var(--t2)">SHA-256 및 변경 내역</a></p>
   </div>
 </section>
 

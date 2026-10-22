@@ -197,6 +197,13 @@
   .shot img{width:100%;display:block}
 
   /* ── HWP ── */
+  .win{background:var(--sunk);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .win .badge{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ground);background:var(--index);border-radius:3px;padding:3px 8px 4px;margin-bottom:14px}
+  .win .note{margin-top:22px;padding:14px 16px;background:var(--wash);border:1px solid var(--hair);
+    border-radius:8px;color:var(--t2);font-size:13.5px;line-height:1.65;max-width:640px}
+  .win .note b{color:var(--t1)}
+  .win .sha{font-family:var(--mono);font-size:12px;color:var(--t3);margin-top:14px}
   .hwp{background:var(--surface);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
   .checks{margin-top:24px;display:grid;gap:0;border-top:1px solid var(--hair2);max-width:640px}
   .checks div{color:var(--t2);font-size:15px;padding:12px 0;
@@ -465,6 +472,40 @@
       <div><span>✓</span><em style="font-style:normal">Korean-aware matching: particles handled, mid-word fragments found</em></div>
     </div>
     <figure class="shot"><img src="../assets/shot-multi.png" alt="Multi-keyword grouped search" loading="lazy"></figure>
+  </div>
+</section>
+<section class="win">
+  <div class="wrap" style="padding-top:76px;padding-bottom:76px">
+    <span class="badge">New &middot; Windows</span>
+    <div class="shead"><span class="tick">WIN</span><span class="lbl">For Windows</span></div>
+    <h2>On Windows too, your AI agent finds your files</h2>
+    <p class="sub">Point it at a folder and it indexes <b>file names and document contents</b>.
+    That index is <b>exposed through an MCP server and a CLI</b>, so an agent like Claude Code asks Lupa
+    instead of crawling your disk. All of it stays on this PC.</p>
+
+    <div class="checks">
+      <div><span>✓</span><em style="font-style:normal">Korean 2-gram index — a mid-word fragment finds the document, and particle-suffixed forms match too</em></div>
+      <div><span>✓</span><em style="font-style:normal">Content search across PDF, Word, Excel, PowerPoint and plain text</em></div>
+      <div><span>✓</span><em style="font-style:normal">One button links it into Claude Desktop or Claude Code — your existing config is backed up and reversible</em></div>
+      <div><span>✓</span><em style="font-style:normal">Same query syntax, including size, kind and date filters</em></div>
+      <div><span>✓</span><em style="font-style:normal">No network code · open source · no .NET install needed</em></div>
+    </div>
+
+    <div class="note">
+      <b>How it differs from the Mac app.</b> Windows is a first public release (v0.1.0), so the HWP
+      section above does not apply yet: <b>HWP content search and scanned-PDF OCR are not implemented</b>
+      (such files are still findable by name), and for name-only lookups Everything is faster.
+      What this build is for is <b>content search and agent access</b>.<br><br>
+      <b>It is not code signed yet.</b> On first launch SmartScreen will say “Windows protected your PC” —
+      choose <b>More info → Run anyway</b>. If you would rather not, build it from source.
+    </div>
+
+    <div class="btns" style="margin-top:26px">
+      <a class="btn primary" href="https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip">Download for Windows — Free</a>
+      <a class="btn ghost" href="https://github.com/paeyoungpark-web/lupa-win" target="_blank" rel="noopener">View source on GitHub</a>
+    </div>
+    <p class="sha">Windows 10 / 11 (x64) · about 70MB zipped ·
+      <a href="https://github.com/paeyoungpark-web/lupa-win/releases/latest" style="color:var(--t2)">SHA-256 and changelog</a></p>
   </div>
 </section>
 
