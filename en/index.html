@@ -372,14 +372,14 @@
     <h2>Now your AI finds the files for you</h2>
     <p class="sub">Lupa ships a <b>command-line interface</b>. AI agents like Claude, Hermes and OpenClaw — and tools
       like Obsidian — turn your <b>plain-language</b> request into a Lupa query and sweep hundreds of thousands
-      of files in <b>tens of milliseconds</b> — all on your Mac.</p>
+      of files in <b>about a tenth of a second</b> — all on your Mac.</p>
 
     <div class="term">
       <div class="tbar"><span></span><span></span><span></span></div>
       <div class="tbody">
         <div class="tline"><span class="tag">You</span>“Find the audit reports that mention management review”</div>
         <div class="tline"><span class="tag ai">AI</span><code>lupa-search "f:audit c:management review"</code></div>
-        <div class="tout">→ <b>598</b> matches · <b class="num">19ms</b> · with highlighted snippets (JSON)</div>
+        <div class="tout">→ <b>601</b> matches · <b class="num">0.11 s</b> · with highlighted snippets (JSON)</div>
       </div>
     </div>
 
@@ -387,7 +387,7 @@
     <div class="tablewrap">
     <table class="cmp">
       <tr><th>Aspect</th><th>Lupa CLI</th><th>Naive agent search <span class="mut">(find-based)</span></th></tr>
-      <tr><td>Search speed</td><td class="good"><b class="num">19ms</b> <span class="mut">instant</span></td><td class="bad"><span class="num">2,348ms</span> <span class="mut">~124× slower</span></td></tr>
+      <tr><td>Search speed</td><td class="good"><b class="num">0.1–0.4 s</b> <span class="mut">index lookup</span></td><td class="bad"><span class="num">several seconds+</span> <span class="mut">grows with file count</span></td></tr>
       <tr><td>Method</td><td class="good">Pre-built SQLite FTS5 index</td><td class="bad">Live filesystem scan</td></tr>
       <tr><td>Content search</td><td class="good">✓ Full text — HWP · PDF · DOCX</td><td class="bad">✗ Filenames only</td></tr>
       <tr><td>Korean (CJK)</td><td class="good">✓ 2-gram · particle handling</td><td class="bad">△ No particle handling</td></tr>
@@ -395,6 +395,7 @@
       <tr><td>Privacy</td><td class="good">Fully local · zero network</td><td class="bad">Local (but slow)</td></tr>
     </table>
     </div>
+    <p class="sub" style="font-size:13px;margin-top:10px">Measured on a Mac with 540,000 indexed files, October 2026. Repeated searches are faster.</p>
 
     <div class="skillcard">
       <div class="sk-h"><code>lupa-file-search</code><span class="sk-tag">Claude · Hermes skill</span></div>
@@ -550,7 +551,7 @@
 <section class="privacy wrap">
   <div class="shead"><span class="tick">05</span><span class="lbl">Privacy</span></div>
   <h2>Private by default</h2>
-  <p class="sub">Lupa contains no networking code at all.</p>
+  <p class="sub">Lupa has <b>no network permission</b> — and you can check it yourself. Run <code>codesign -d --entitlements - /Applications/Lupa.app</code> in Terminal: you will see only the sandbox, app group and user-selected folder entitlements, and no <code>network.client</code>.</p>
   <div class="cards">
     <div class="card"><h3>100% on-device</h3><p>Indexing, search, OCR and HWP rendering all happen on your Mac.</p></div>
     <div class="card"><h3>Zero data collection</h3><p>Nothing ever leaves your machine. App Store privacy label: "Data Not Collected".</p></div>
@@ -577,7 +578,9 @@
       <a href="https://github.com/paeyoungpark-web/lupa-mcp" target="_blank" rel="noopener">MCP server</a> ·
       <a href="https://github.com/paeyoungpark-web/lupa-claude-plugin" target="_blank" rel="noopener">Claude Code plugin</a> ·
       <a href="https://github.com/paeyoungpark-web/lupa-legal/blob/main/PRIVACY.md">Privacy Policy</a> ·
-      <a href="https://github.com/paeyoungpark-web/lupa-legal">Support</a>
+      <a href="https://github.com/paeyoungpark-web/lupa/issues" target="_blank" rel="noopener">Feedback &amp; bugs</a> ·
+      <a href="https://github.com/paeyoungpark-web/lupa-legal">Support</a> ·
+      <a href="https://github.com/paeyoungpark-web/lupa" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
 </footer>
@@ -600,7 +603,7 @@
   }catch(e){}
 })();
 </script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Lupa","applicationCategory":"UtilitiesApplication","operatingSystem":"macOS 12 or later","url":"https://lupa.kr/en/","downloadUrl":"https://apps.apple.com/app/id6789231809","softwareVersion":"1.0","isAccessibleForFree":true,"description":"Local file and content search for macOS. Finds a document from one word inside it, including Korean HWP files and OCR'd scans, in about 30ms. Nothing leaves the Mac.","author":{"@type":"Person","name":"Paeyoung Park","url":"https://lupa.kr"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Lupa","applicationCategory":"UtilitiesApplication","operatingSystem":"macOS 14 or later","url":"https://lupa.kr/en/","downloadUrl":"https://apps.apple.com/app/id6789231809","softwareVersion":"1.0","isAccessibleForFree":true,"description":"Local file and content search for macOS. Finds a document from one word inside it, including Korean HWP files and OCR'd scans, in about 30ms. Nothing leaves the Mac.","author":{"@type":"Person","name":"Paeyoung Park","url":"https://lupa.kr"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Lupa for Windows","applicationCategory":"UtilitiesApplication","operatingSystem":"Windows 10, Windows 11","url":"https://lupa.kr/en/","downloadUrl":"https://github.com/paeyoungpark-web/lupa-win/releases/latest/download/Lupa-win-x64.zip","softwareVersion":"0.1.0","isAccessibleForFree":true,"description":"Local file and document-content search for Windows, exposed to AI agents over MCP. Korean 2-gram indexing matches substrings and particle-suffixed forms.","author":{"@type":"Person","name":"Paeyoung Park","url":"https://lupa.kr"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 </body>
 </html>
